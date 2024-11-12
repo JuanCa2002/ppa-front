@@ -1,13 +1,33 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'app-front';
+  items: MenuItem[] | undefined;
+
+    ngOnInit() {
+        this.items = [
+            {
+                label: 'Departments',
+                icon: 'pi pi-home',
+                path: '/department-management'
+            },
+            {
+                label: 'Features',
+                icon: 'pi pi-star'
+            },
+            {
+                label: 'Projects',
+                icon: 'pi pi-search'
+            },
+            {
+                label: 'Contact',
+                icon: 'pi pi-envelope',
+                badge: '3'
+            }
+        ];
+    }
 }
