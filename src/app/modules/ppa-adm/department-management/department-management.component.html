@@ -1,16 +1,7 @@
-
-<div class="card flex justify-content-start" style="margin-top: 10px;">
-    <p-breadcrumb 
-        class="max-w-full" 
-        [model]="items" 
-        [home]="home" />
-</div>
-
 <div [ngSwitch]="stateComponent">
     <ng-container *ngSwitchDefault>
-        <app-department-managment-table></app-department-managment-table>
-    </ng-container>
-    <ng-container *ngSwitchCase="'FILTER'">
-        <app-department-managment-table></app-department-managment-table>
+        <app-main-section [title]="title" [items]="items">
+            <app-department-managment-table></app-department-managment-table>
+        </app-main-section>
     </ng-container>
 </div>

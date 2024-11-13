@@ -7,8 +7,7 @@ import { registerLocaleData } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { MessageService, SharedModule } from 'primeng/api';
 
 registerLocaleData( localeEsHN );
 
@@ -25,7 +24,8 @@ registerLocaleData( localeEsHN );
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     MenubarModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [
     MessageService

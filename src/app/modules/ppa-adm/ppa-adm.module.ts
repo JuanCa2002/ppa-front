@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({
@@ -21,10 +19,6 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
           pathMatch: "full"
       }
     ]),
-    CommonModule,
-    BreadcrumbModule,
-  ],
-  declarations: [
-  ],
+  ]
 })
 export class PpaAdmModule { }
