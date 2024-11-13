@@ -4,7 +4,7 @@ import { DepartmentApiService } from '../../services/department-api.service';
 import { DepartmentFilterDTO } from '../../../../../dtos/ppa-adm/department-management/department-filter.dto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '../../../../../enums/ppa-adm/state';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-department-managment-table',
@@ -26,6 +26,7 @@ export class DepartmentManagmentTableComponent implements OnInit{
 
     constructor(private departmentApiService: DepartmentApiService,
       private messageService: MessageService,
+      private confirmationService: ConfirmationService,
       private fb: FormBuilder
     ){}
 
@@ -82,7 +83,7 @@ export class DepartmentManagmentTableComponent implements OnInit{
       });
     }
 
-    public saveNewDepartment(){
+    private saveNewDepartment(){
       this.showLoad = true;
       const department: DepartmentDto = new DepartmentDto();
       department.name = this.formCreateDepartment.get('name')?.value;
@@ -97,10 +98,10 @@ export class DepartmentManagmentTableComponent implements OnInit{
       }) 
     }
 
-    public updateState(id: number){
+    private updateState(id: number){
       this.showLoad = true;
       this.departmentApiService.patchStateDepartment$(id).subscribe(data =>{
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department State updated Succesfully' });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department State Updated Succesfully' });
         this.loadDepartments();
       }, error =>{
         this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
@@ -116,13 +117,13 @@ export class DepartmentManagmentTableComponent implements OnInit{
       this.formCreateDepartment.get('state')?.setValue(department.state == 'ACTIVE' ? true: false);
     }
 
-    public update(){
+    private update(){
       this.showLoad = true;
       const updatedDepartment = this.formCreateDepartment.value as DepartmentDto;
       updatedDepartment.id = this.selectDepartmentId;
       updatedDepartment.state = this.formCreateDepartment.get('state')?.value ? State.ACTIVE: State.INACTIVE;
       this.departmentApiService.updateDepartment$(updatedDepartment).subscribe(() =>{
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department updated Succesfully' });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department Updated Succesfully' });
         this.loadDepartments();
         this.formCreateDepartment.reset();
         this.showModalNew = false;
@@ -143,6 +144,38 @@ export class DepartmentManagmentTableComponent implements OnInit{
     public clearFilters(){
       this.formFilterDepartment.reset();
     }
+
+    public openConfirmChangeState(id: number){
+      this.confirmationService.confirm({
+        message: 'Are you sure you wanna change the state of this department?',
+        header: 'Change State',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon: "none",
+        rejectIcon: "none",
+        rejectButtonStyleClass: "p-button-text",
+        accept: () => {
+            this.updateState(id);
+        },
+    });
+    }
+
+
+    public openConfirmSave() {
+      const message = 'Are you sure you wanna ' + (this.isUpdate ? 'update this' : 'create a new') + ' department?';
+      const header = (this.isUpdate ? 'Update' : 'Create New') + ' Department';
+      
+      this.confirmationService.confirm({
+          message: message,
+          header: header,
+          icon: 'pi pi-exclamation-triangle',
+          acceptIcon: "none",
+          rejectIcon: "none",
+          rejectButtonStyleClass: "p-button-text",
+          accept: () => {
+              this.isUpdate ? this.update() : this.saveNewDepartment();
+          },
+      });
+  }
 
 
 

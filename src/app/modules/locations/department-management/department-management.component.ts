@@ -13,7 +13,7 @@ export class DepartmentManagementComponent implements OnInit{
 
     ngOnInit(): void {
         this.items = [
-            { label: 'Admin' }, 
+            { label: 'Locations'}, 
             { label: 'Departments' }
         ];
     }

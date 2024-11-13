@@ -2,12 +2,12 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path: "ppa-adm",
-        loadChildren: () => import('./modules/ppa-adm/ppa-adm.module').then(m => m.PpaAdmModule)
+        path: "locations",
+        loadChildren: () => import('./modules/locations/locations.module').then(m => m.LocationsModule)
     },
     {
         path: "",
-        redirectTo: "ppa-adm",
+        redirectTo: "locations",
         pathMatch: "full"
     }
 ];
