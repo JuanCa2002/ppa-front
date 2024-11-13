@@ -1,0 +1,12 @@
+<div class="main">
+    <div class="section">
+        <div class="card flex justify-content-start" style="margin-top: 10px;">
+            <p-breadcrumb 
+                class="max-w-full" 
+                [model]="items" 
+                [home]="home" />
+        </div>
+        <h1 class="text-left font-bold">{{title}}</h1>
+        <ng-content></ng-content>
+    </div>
+</div>

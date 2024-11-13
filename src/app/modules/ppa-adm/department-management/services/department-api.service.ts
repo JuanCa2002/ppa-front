@@ -37,4 +37,8 @@ export class DepartmentApiService{
         return this.httpClient.patch<DepartmentDto>(`${DepartmentApiConstant.URL_DEPARTMENT}/${id}`, null);
     }
 
+    public updateDepartment$(department: DepartmentDto):Observable<DepartmentDto>{
+        return this.httpClient.put<DepartmentDto>(DepartmentApiConstant.URL_DEPARTMENT,department)
+    }
+
 }

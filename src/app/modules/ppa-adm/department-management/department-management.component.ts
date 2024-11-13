@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -6,20 +6,19 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './department-management.component.html',
   styleUrl: './department-management.component.css'
 })
-export class DepartmentManagementComponent {
-
-    public items: MenuItem[] | undefined;
-    public home: MenuItem | undefined;
+export class DepartmentManagementComponent implements OnInit{
     public stateComponent: string  = "FILTER";
+    public title: string = "Departments";
+    public items: MenuItem[] | undefined;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.items = [
-            { label: 'Ppa-adm' }, 
-            { label: 'Departments' },
-            { label: 'Department Management'}
+            { label: 'Admin' }, 
+            { label: 'Departments' }
         ];
-
-        this.home = { icon: 'pi pi-home', routerLink: '/' };
     }
+
+    
+
 
 }

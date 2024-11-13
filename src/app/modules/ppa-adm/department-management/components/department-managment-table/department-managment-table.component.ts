@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DepartmentDto } from '../../../../../dtos/ppa-adm/department-management/department.dto';
 import { DepartmentApiService } from '../../services/department-api.service';
 import { DepartmentFilterDTO } from '../../../../../dtos/ppa-adm/department-management/department-filter.dto';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '../../../../../enums/ppa-adm/state';
 import { MessageService } from 'primeng/api';
 
@@ -20,6 +20,9 @@ export class DepartmentManagmentTableComponent implements OnInit{
     public states: any[] = [];
     public showLoad: boolean = false;
     public showModalNew: boolean = false;
+    public isUpdate: boolean = false;
+    public selectDepartmentId: number = 0;
+    public rows: number = 10;
 
     constructor(private departmentApiService: DepartmentApiService,
       private messageService: MessageService,
@@ -36,6 +39,7 @@ export class DepartmentManagmentTableComponent implements OnInit{
         {value: State.INACTIVE, label: 'Inactive'},
       ]
       this.showLoad = false;
+      this.onInputChange();
     }
 
     private initializaForm(){
@@ -44,7 +48,8 @@ export class DepartmentManagmentTableComponent implements OnInit{
         state: [null]
       });
       this.formCreateDepartment = this.fb.group({
-        name: [null]
+        name: [null, Validators.required],
+        state: [null]
       })
     }
 
@@ -100,8 +105,43 @@ export class DepartmentManagmentTableComponent implements OnInit{
       }, error =>{
         this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
         this.showLoad = false;
+      }); 
+    }
+
+    public showModalUpdate(department: DepartmentDto){
+      this.selectDepartmentId = department.id!;
+      this.isUpdate = true; 
+      this.showModalNew = true
+      this.formCreateDepartment.get('name')?.setValue(department.name);
+      this.formCreateDepartment.get('state')?.setValue(department.state == 'ACTIVE' ? true: false);
+    }
+
+    public update(){
+      this.showLoad = true;
+      const updatedDepartment = this.formCreateDepartment.value as DepartmentDto;
+      updatedDepartment.id = this.selectDepartmentId;
+      updatedDepartment.state = this.formCreateDepartment.get('state')?.value ? State.ACTIVE: State.INACTIVE;
+      this.departmentApiService.updateDepartment$(updatedDepartment).subscribe(() =>{
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department updated Succesfully' });
+        this.loadDepartments();
+        this.formCreateDepartment.reset();
+        this.showModalNew = false;
+      }, error =>{
+        this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+        this.showLoad = false;
       })
-      
+    }
+
+    public onInputChange(){
+      this.formCreateDepartment.get('name')?.valueChanges.subscribe((value) =>{
+        if(value && value != null && value!=""){
+          this.formCreateDepartment.get('name')?.setValue(value.toUpperCase(), { emitEvent: false });
+        }
+      });
+    }
+
+    public clearFilters(){
+      this.formFilterDepartment.reset();
     }
 
 
