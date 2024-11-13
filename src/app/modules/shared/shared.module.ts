@@ -14,6 +14,9 @@ import { TableModule } from 'primeng/table';
 import { MainSectionComponent } from "./components/main-section/main-section.component";
 import { CapitalizePipe } from "./pipes/capitalize-case.pipe";
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from "primeng/api";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 @NgModule({
     imports: [
@@ -30,7 +33,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         DialogModule,
         ToastModule,
         InputSwitchModule,
-        CommonModule
+        CommonModule,
+        ConfirmDialogModule,
+        FontAwesomeModule 
     ],
     declarations: [
         MainSectionComponent,
@@ -52,7 +57,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         CommonModule,
         InputSwitchModule,
         MainSectionComponent,
-        CapitalizePipe
-    ]
+        CapitalizePipe,
+        ConfirmDialogModule,
+        FontAwesomeModule
+    ],
+    providers:[ConfirmationService]
   })
   export class SharedModule {}

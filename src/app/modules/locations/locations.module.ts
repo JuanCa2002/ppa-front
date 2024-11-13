@@ -14,6 +14,14 @@ import { RouterModule } from '@angular/router';
             ).then((m) => m.DepartmentManagementModule),
         },
         {
+          path:
+            "municipalities-management",
+          loadChildren: () =>
+            import(
+              "./municipalities-management/municipalities-management.module"
+            ).then((m) => m.MunicipalitiesManagementModule),
+        },
+        {
           path: "",
           redirectTo: "department-management",
           pathMatch: "full"
@@ -21,4 +29,4 @@ import { RouterModule } from '@angular/router';
     ]),
   ]
 })
-export class PpaAdmModule { }
+export class LocationsModule { }

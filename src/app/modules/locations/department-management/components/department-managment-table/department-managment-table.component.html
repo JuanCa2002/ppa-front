@@ -54,7 +54,7 @@
                 <td>{{ department.name | CapitalizePipe}}</td>
                 <td>{{ department.state | CapitalizePipe}} <i [ngClass]="department.state == 'ACTIVE' ? 'state-active' : 'state-inactive'" class="ml-2"></i></td>
                 <td class="text-center">
-                    <i [ngClass]="department.state == 'ACTIVE' ? 'pi pi-eye' : 'pi pi-eye-slash'" class="cursor-pointer icon-style" (click)="updateState(department.id)"></i>
+                    <i [ngClass]="department.state == 'ACTIVE' ? 'pi pi-eye' : 'pi pi-eye-slash'" class="cursor-pointer icon-style" (click)="openConfirmChangeState(department.id)"></i>
                     <i class="pi pi-pencil cursor-pointer icon-style" (click)="showModalUpdate(department)"></i>
                 </td>
             </tr>
@@ -67,7 +67,8 @@
 
 <p-dialog
     header="{{isUpdate ? 'Update': 'New'}} Department" 
-    [modal]="true" 
+    [modal]="true"
+    [draggable]="false" 
     [(visible)]="showModalNew" 
     [style]="{ width: '25rem' }">
     <span class="p-text-secondary block mb-5">{{isUpdate  ? 'Update': 'Create'}} Department</span>
@@ -91,8 +92,9 @@
     </form>
     <div class="flex justify-content-end gap-2">
         <p-button label="Cancel" severity="secondary" (onClick)="showModalNew = false" />
-        <p-button label="{{isUpdate ? 'Update': 'Save'}}" [disabled]="formCreateDepartment.invalid" (onClick)="isUpdate ? update() :saveNewDepartment()" />
+        <p-button label="{{isUpdate ? 'Update': 'Save'}}" [disabled]="formCreateDepartment.invalid" (onClick)="openConfirmSave()" />
     </div>
 </p-dialog>
 
-<p-toast />
+<p-toast position="bottom-center" />
+<p-confirmDialog />

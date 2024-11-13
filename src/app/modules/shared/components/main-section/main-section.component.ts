@@ -14,6 +14,6 @@ export class MainSectionComponent implements OnInit{
 
   ngOnInit() {
     this.home = { icon: 'pi pi-home', routerLink: '/' };
-}
+  }
 
 }
