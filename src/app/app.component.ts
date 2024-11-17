@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  items: MenuItem[] | undefined;
+    items: MenuItem[] | undefined;
+    isLoading = this.loadingService.loading$;
 
-    constructor(private router: Router){}
+    constructor(private router: Router, private loadingService: LoadingService){}
 
     ngOnInit() {
         this.items = [

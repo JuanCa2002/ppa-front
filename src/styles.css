@@ -21,6 +21,10 @@
     width: 100%;
 }
 
+:host ::ng-deep .p-inputtext{
+    width: 100%;
+}
+
 .loading-overlay {
     position: fixed;
     top: 0;

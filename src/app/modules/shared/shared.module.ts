@@ -17,6 +17,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from "primeng/api";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
         InputSwitchModule,
         CommonModule,
         ConfirmDialogModule,
-        FontAwesomeModule 
+        FontAwesomeModule,
+        MessagesModule
     ],
     declarations: [
         MainSectionComponent,
@@ -59,7 +61,8 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
         MainSectionComponent,
         CapitalizePipe,
         ConfirmDialogModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        MessagesModule
     ],
     providers:[ConfirmationService]
   })

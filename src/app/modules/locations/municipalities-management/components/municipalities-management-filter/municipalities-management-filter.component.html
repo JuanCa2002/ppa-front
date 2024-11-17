@@ -1,0 +1,90 @@
+<div>
+    <div class="card flex justify-content-end mt-4 mb-3">
+        <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="showModalNew = true"/>
+    </div>
+    <form [formGroup]="formFilterMunicipalities" class="filters">
+        <div class="flex flex-column gap-2">
+            <label for="municipality_name" class="font-bold">Name</label>
+            <input 
+                pInputText 
+                id="municipality_name" 
+                name="municipality_name"
+                formControlName="name" />
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="municipality_state" class="font-bold">State</label>
+            <p-dropdown 
+                [options]="states"
+                id="municipality_state"
+                name="municipality_state"
+                formControlName="state" 
+                optionLabel="label" 
+                optionValue="value" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="municipality_department_id" class="font-bold">Department <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="departments"
+                id="municipality_department_id"
+                name="municipality_department_id"
+                formControlName="departmentId" 
+                optionLabel="name" 
+                optionValue="id" 
+                placeholder="Select"
+                filter="true"
+                filterBy="name"
+                (onFilter)="loadDepartments($event)"
+                showClear="true"/>
+        </div>
+    </form>
+</div>
+
+<div class="card flex justify-content-end mt-4 gap-4 button-filter">
+    <p-button  label="Filter" icon="pi pi-search" [disabled]="formFilterMunicipalities.invalid" (onClick)="filter()"/>
+    <p-button class="clear-button" label="Clear" icon="pi pi-eraser" severity="secondary" (onClick)="clear()"/>
+</div>
+
+<p-dialog
+    header="New Municipality" 
+    [modal]="true"
+    [draggable]="false"
+    [(visible)]="showModalNew" 
+    [style]="{ width: '30rem', heigth: '50rem' }">
+    <span class="p-text-secondary block mb-5">Create Municipality</span>
+    <form [formGroup]="formSaveMunicipality">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="name_new" class="font-semibold w-6rem">Name <span class="required">*</span></label>
+            <input pInputText 
+                    id="name_new" 
+                    name="name_new" 
+                    formControlName="name" 
+                    class="flex-auto" 
+                    autocomplete="off" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-3" id="dropdowm-municipality-department">
+            <label for="municipality_new_department_id" class="font-semibold">Department<span class="required ml-2">*</span></label>
+            <p-dropdown
+                [options]="departments"
+                id="municipality_new_department_id"
+                name="municipality_new_department_id"
+                formControlName="departmentId" 
+                optionLabel="name" 
+                optionValue="id" 
+                placeholder="Select"
+                appendTo="body"
+                filter="true"
+                filterBy="name"
+                (onFilter)="loadDepartments($event)"
+                showClear="true"/>
+        </div>
+    </form>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="showModalNew = false" />
+        <p-button label="Save" [disabled]="formSaveMunicipality.invalid" (onClick)="openConfirmSave()" />
+    </div>
+</p-dialog>
+
+<p-toast position="bottom-center" />
+<p-confirmDialog />

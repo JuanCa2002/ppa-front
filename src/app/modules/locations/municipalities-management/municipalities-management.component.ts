@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { MunicipalitiesManagementTableComponent } from './components/municipalities-management-table/municipalities-management-table.component';
+import { MunicipalityDTO } from '../../../dtos/locations/municipalities-management/municipality.dto';
 
 @Component({
   selector: 'app-municipalities-management',
@@ -8,15 +10,20 @@ import { MenuItem } from 'primeng/api';
 })
 export class MunicipalitiesManagementComponent implements OnInit{
 
-  public stateComponent: string  = "FILTER";
+    public stateComponent: string  = "FILTER";
     public title: string = "Municipalities";
     public items: MenuItem[] | undefined;
+    @ViewChild("municipalitiesTable") municipalitiesTable!: MunicipalitiesManagementTableComponent;
 
     ngOnInit(): void {
         this.items = [
             { label: 'Locations'}, 
             { label: 'Municipalities' }
         ];
+    }
+
+    public filter(filter: any){
+      this.municipalitiesTable.loadMunicipalities(filter);
     }
 
 }

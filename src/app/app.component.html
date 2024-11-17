@@ -42,4 +42,7 @@
         </ng-template>
     </p-menubar>
 </div>
+<div *ngIf="isLoading | async" class="loading-overlay">
+    <p-progressSpinner ariaLabel="loading" />
+</div>
 <router-outlet></router-outlet>
