@@ -1,5 +1,5 @@
 <div>
-    <div class="card flex justify-content-end mt-4">
+    <div class="card flex justify-content-end mt-4 mb-3">
         <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="showModalNew = true; isUpdate = false; formCreateDepartment.reset()" />
     </div>
     <form [formGroup]="formFilterDepartment" class="filters">
@@ -30,8 +30,12 @@
     <p-button  label="Filter" icon="pi pi-search" (onClick)="loadDepartments()"/>
     <p-button class="clear-button" label="Clear" icon="pi pi-eraser" severity="secondary" (onClick)="clearFilters()"/>
 </div>
-        
-<div class="table-style-v1 card mt-5">
+
+<div class="card" *ngIf="!showTable">
+    <p-messages [(value)]="messages" [closable]="false" />
+</div>
+
+<div *ngIf="showTable" class="table-style-v1 card mt-5">
     <p-table
         [value]="departments"
         [paginator]="true"
@@ -60,9 +64,6 @@
             </tr>
         </ng-template>
     </p-table>
-    <div *ngIf="showLoad" class="loading-overlay">
-        <p-progressSpinner ariaLabel="loading" />
-    </div>
 </div>
 
 <p-dialog

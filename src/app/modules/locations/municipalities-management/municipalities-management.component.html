@@ -1,7 +1,10 @@
 <div [ngSwitch]="stateComponent">
     <ng-container *ngSwitchDefault>
-        <app-main-section [title]="title" [items]="items">
-            HOLA
+        <app-main-section [title]="title" [items]="items" style="padding:5%;">
+            <app-municipalities-management-filter (onFilter)="filter($event)"></app-municipalities-management-filter>
+            <app-municipalities-management-table #municipalitiesTable></app-municipalities-management-table>
         </app-main-section>
+        <div>
+        </div>
     </ng-container>
 </div>
