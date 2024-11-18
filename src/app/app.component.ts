@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { LoadingService } from './services/loading.service';
+import { RouterConstants } from './constants/routers/router-constants';
+import { LocationsRouterConstants } from './constants/routers/locations/locations-router-constants';
+import { AirInfrastructureRouterConstants } from './constants/routers/air-infrastructure/air-infrastructure-router-constants';
 
 @Component({
   selector: 'app-root',
@@ -22,18 +25,25 @@ export class AppComponent {
                     {
                         label: 'Departments',
                         icon: 'pi pi-sitemap',
-                        command:(click)=>{this.router.navigate(['/locations/department-management']);}
+                        command:(click)=>{this.router.navigate(['/' + RouterConstants.LOCATIONS_ROUTER + '/' + LocationsRouterConstants.DEPARTMENT_ROUTER]);}
                     },
                     {
                         label: 'Municipalities',
                         icon: 'pi pi-map',
-                        command:(click)=>{this.router.navigate(['/locations/municipalities-management']);}
+                        command:(click)=>{this.router.navigate(['/' + RouterConstants.LOCATIONS_ROUTER + '/' + LocationsRouterConstants.MUNICIPALITY_ROUTER]);}
                     }
                 ]
             },
             {
-                label: 'Airlines',
-                icon: 'pi pi-flag'
+                label: 'Air Infrastructure',
+                icon: 'pi pi-share-alt',
+                items: [
+                    {
+                        label: 'Airlines',
+                        icon: 'pi pi-flag',
+                        command:(click)=>{this.router.navigate(['/' + RouterConstants.AIR_INFRASTRUCTURE_ROUTER + '/' + AirInfrastructureRouterConstants.AIRLINE_ROUTER]);}
+                    },
+                ]
             },
             {
                 label: 'Flights',

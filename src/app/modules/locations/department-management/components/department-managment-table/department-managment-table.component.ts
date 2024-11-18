@@ -5,6 +5,8 @@ import { State } from '../../../../../enums/ppa-adm/state';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { DepartmentDto } from '../../../../../dtos/locations/department-management/department.dto';
 import { DepartmentFilterDTO } from '../../../../../dtos/locations/department-management/department-filter.dto';
+import { DepartmentMessagesConstants } from '../../../../../constants/messages/locations/department-messages-constants';
+import { GeneralMessagesConstants } from '../../../../../constants/messages/general-messages-constants';
 
 @Component({
   selector: 'app-department-managment-table',
@@ -35,7 +37,7 @@ export class DepartmentManagmentTableComponent implements OnInit{
     ngOnInit(): void {
       this.initializaForm();
       this.loadDepartments();
-      this.messages = [{ severity: 'info', detail: 'Click filter to view information' }];
+      this.messages = [{ severity: 'info', detail: GeneralMessagesConstants.GENERAL_INFO_FILTER_MESSAGE }];
       this.states = [
         {value: State.ACTIVE, label: 'Active'},
         {value: State.INACTIVE, label: 'Inactive'},
@@ -80,7 +82,7 @@ export class DepartmentManagmentTableComponent implements OnInit{
               return;
             }
             this.showTable = false;
-            this.messages = [{ severity: 'error', detail: 'No results were found with the filters entered'}];
+            this.messages = [{ severity: 'error', detail: GeneralMessagesConstants.NO_RESULT_FOUND_MESSAGE}];
       }, error => {
             this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
       });
@@ -89,8 +91,8 @@ export class DepartmentManagmentTableComponent implements OnInit{
     private saveNewDepartment(){
       const department: DepartmentDto = new DepartmentDto();
       department.name = this.formCreateDepartment.get('name')?.value;
-      this.departmentApiService.saveDepartment$(department).subscribe(data =>{
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department Created Succesfully' });
+      this.departmentApiService.saveDepartment$(department).subscribe(() =>{
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: DepartmentMessagesConstants.DEPARTMENT_CREATED_SUCCESS_MESSAGE });
         this.loadDepartments();
         this.formCreateDepartment.reset();
         this.showModalNew = false;
@@ -101,7 +103,7 @@ export class DepartmentManagmentTableComponent implements OnInit{
 
     private updateState(id: number){
       this.departmentApiService.patchStateDepartment$(id).subscribe(data =>{
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department State Updated Succesfully' });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: DepartmentMessagesConstants.DEPARTMENT_STATE_UPDATED_SUCCESS_MESSAGE });
         this.loadDepartments();
       }, error =>{
         this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
@@ -121,7 +123,7 @@ export class DepartmentManagmentTableComponent implements OnInit{
       updatedDepartment.id = this.selectDepartmentId;
       updatedDepartment.state = this.formCreateDepartment.get('state')?.value ? State.ACTIVE: State.INACTIVE;
       this.departmentApiService.updateDepartment$(updatedDepartment).subscribe(() =>{
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Department Updated Succesfully' });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: DepartmentMessagesConstants.DEPARTMENT_UPDATED_SUCCESS_MESSAGE });
         this.loadDepartments();
         this.formCreateDepartment.reset();
         this.showModalNew = false;
@@ -144,8 +146,8 @@ export class DepartmentManagmentTableComponent implements OnInit{
 
     public openConfirmChangeState(id: number){
       this.confirmationService.confirm({
-        message: 'Are you sure you wanna change the state of this department?',
-        header: 'Change State',
+        message: GeneralMessagesConstants.GENERAL_CONFIRM_STATE_MESSAGE + ' this department?',
+        header: GeneralMessagesConstants.CHANGE_STATE_HEADER_MESSAGE,
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: "none",
         rejectIcon: "none",

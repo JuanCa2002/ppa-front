@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { MunicipalityDTO } from "../../../../dtos/locations/municipalities-management/municipality.dto";
-import { MunicipalityApiConstant } from "../../../../constants/router/municipalities/municipality-api-constant";
+import { MunicipalityApiConstant } from "../../../../constants/apis/locations/municipalities/municipality-api-constant";
 
 @Injectable({
     providedIn: "root",

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LocationsRouterConstants } from '../../constants/routers/locations/locations-router-constants';
 
 
 @NgModule({
@@ -7,7 +8,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
           path:
-            "department-management",
+            LocationsRouterConstants.DEPARTMENT_ROUTER,
           loadChildren: () =>
             import(
               "./department-management/department-management.module"
@@ -15,7 +16,7 @@ import { RouterModule } from '@angular/router';
         },
         {
           path:
-            "municipalities-management",
+            LocationsRouterConstants.MUNICIPALITY_ROUTER,
           loadChildren: () =>
             import(
               "./municipalities-management/municipalities-management.module"
@@ -23,7 +24,7 @@ import { RouterModule } from '@angular/router';
         },
         {
           path: "",
-          redirectTo: "department-management",
+          redirectTo: LocationsRouterConstants.DEPARTMENT_ROUTER,
           pathMatch: "full"
       }
     ]),
