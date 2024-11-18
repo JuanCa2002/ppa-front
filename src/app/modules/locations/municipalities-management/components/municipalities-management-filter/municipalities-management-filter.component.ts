@@ -7,6 +7,8 @@ import { DepartmentDto } from '../../../../../dtos/locations/department-manageme
 import { DepartmentFilterDTO } from '../../../../../dtos/locations/department-management/department-filter.dto';
 import { MunicipalityDTO } from '../../../../../dtos/locations/municipalities-management/municipality.dto';
 import { MunicipalityApiService } from '../../services/municipality-api.service';
+import { MunicipalityMessagesConstants } from '../../../../../constants/messages/locations/municipality-messages-constants';
+import { GeneralMessagesConstants } from '../../../../../constants/messages/general-messages-constants';
 
 @Component({
   selector: 'app-municipalities-management-filter',
@@ -81,7 +83,7 @@ export class MunicipalitiesManagementFilterComponent implements OnInit{
   private saveNewMunicipality(){
     const municipality = this.formSaveMunicipality.value as MunicipalityDTO;
     this.municipalityApiService.saveMunicipality$(municipality).subscribe(() =>{
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Municipality Created Succesfully'});
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: MunicipalityMessagesConstants.MUNICIPALITY_CREATED_SUCCESS_MESSAGE});
       this.showModalNew = false;
       this.clear();
     }, error =>{
@@ -99,8 +101,8 @@ export class MunicipalitiesManagementFilterComponent implements OnInit{
 
 
   public openConfirmSave() {
-    const message = 'Are you sure you wanna create a new municipality to this department?';
-    const header = 'Create New Municipality';
+    const message = GeneralMessagesConstants.GENERAL_CREATE_MESSAGE + ' municipality to this department?';
+    const header = GeneralMessagesConstants.NEW_HEADER_MESSAGE + ' Municipality';
     
     this.confirmationService.confirm({
         message: message,

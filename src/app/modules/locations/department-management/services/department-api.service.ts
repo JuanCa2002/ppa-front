@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { PaginatedResponseDTO } from "../../../../dtos/paginated-response.dto";
 import { Observable } from "rxjs";
-import { DepartmentApiConstant } from "../../../../constants/router/department/department-api-constant";
 import { DepartmentFilterDTO } from "../../../../dtos/locations/department-management/department-filter.dto";
 import { DepartmentDto } from "../../../../dtos/locations/department-management/department.dto";
+import { DepartmentApiConstant } from "../../../../constants/apis/locations/department/department-api-constant";
 
 @Injectable({
     providedIn: "root",

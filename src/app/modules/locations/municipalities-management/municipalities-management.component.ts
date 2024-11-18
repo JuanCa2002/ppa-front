@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MunicipalitiesManagementTableComponent } from './components/municipalities-management-table/municipalities-management-table.component';
-import { MunicipalityDTO } from '../../../dtos/locations/municipalities-management/municipality.dto';
 
 @Component({
   selector: 'app-municipalities-management',

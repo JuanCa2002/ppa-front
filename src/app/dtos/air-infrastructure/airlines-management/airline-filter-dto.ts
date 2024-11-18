@@ -1,6 +1,7 @@
 import { PageDTO } from "../../page-dto";
 
-export class DepartmentFilterDTO extends PageDTO{
+export class AirlineFilterDTO extends PageDTO{
     public name?: string;
     public state?: string;
+
 }

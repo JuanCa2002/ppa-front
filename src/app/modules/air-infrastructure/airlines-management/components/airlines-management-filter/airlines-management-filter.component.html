@@ -1,0 +1,33 @@
+<div>
+    <div class="card flex justify-content-end mt-4 mb-3">
+        <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="createNewAirline()"/>
+    </div>
+    <form [formGroup]="formFilterAirline" class="filters">
+        <div class="flex flex-column gap-2">
+            <label for="name_airline" class="font-bold">Name</label>
+            <input 
+                pInputText 
+                id="name_airline" 
+                name="name_airline"
+                formControlName="name" />
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="state_airline" class="font-bold">State</label>
+            <p-dropdown 
+                [options]="states"
+                id="state_airline"
+                name="state_airline"
+                formControlName="state" 
+                optionLabel="label" 
+                optionValue="value" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+    </form>
+</div>
+
+<div class="card flex justify-content-end mt-4 gap-4 button-filter">
+    <p-button  label="Filter" icon="pi pi-search" (onClick)="filterAirlines()"/>
+    <p-button class="clear-button" label="Clear" icon="pi pi-eraser" severity="secondary" (onClick)="clearFilters()"/>
+</div>
+
