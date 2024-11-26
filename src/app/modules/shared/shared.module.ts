@@ -18,6 +18,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from "primeng/api";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { MessagesModule } from 'primeng/messages';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import { MessagesModule } from 'primeng/messages';
         CommonModule,
         ConfirmDialogModule,
         FontAwesomeModule,
-        MessagesModule
+        MessagesModule,
+        CalendarModule
     ],
     declarations: [
         MainSectionComponent,
@@ -62,7 +64,8 @@ import { MessagesModule } from 'primeng/messages';
         CapitalizePipe,
         ConfirmDialogModule,
         FontAwesomeModule,
-        MessagesModule
+        MessagesModule,
+        CalendarModule
     ],
     providers:[ConfirmationService]
   })

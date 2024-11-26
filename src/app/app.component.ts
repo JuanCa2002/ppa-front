@@ -43,6 +43,11 @@ export class AppComponent {
                         icon: 'pi pi-flag',
                         command:(click)=>{this.router.navigate(['/' + RouterConstants.AIR_INFRASTRUCTURE_ROUTER + '/' + AirInfrastructureRouterConstants.AIRLINE_ROUTER]);}
                     },
+                    {
+                        label: 'Airplanes',
+                        icon: 'pi pi-send',
+                        command:(click)=>{this.router.navigate(['/' + RouterConstants.AIR_INFRASTRUCTURE_ROUTER + '/' + AirInfrastructureRouterConstants.AIRPLANE_ROUTER]);}
+                    }
                 ]
             },
             {

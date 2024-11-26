@@ -6,11 +6,13 @@ import { AirlineFilterDTO } from '../../../../../dtos/air-infrastructure/airline
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralMessagesConstants } from '../../../../../constants/messages/general-messages-constants';
 import { AirlineMessagesConstants } from '../../../../../constants/messages/air-infrastructure/airline-messages-constants';
+import { CapitalizePipe } from '../../../../shared/pipes/capitalize-case.pipe';
 
 @Component({
   selector: 'app-airlines-management-table',
   templateUrl: './airlines-management-table.component.html',
-  styleUrl: './airlines-management-table.component.css'
+  styleUrl: './airlines-management-table.component.css',
+  providers: [CapitalizePipe]
 })
 export class AirlinesManagementTableComponent implements OnInit{
     public rows: number = 10;
@@ -24,12 +26,14 @@ export class AirlinesManagementTableComponent implements OnInit{
     constructor(private airlineApiService: AirlineApiService,
                 private messageService: MessageService,
                 private fb: FormBuilder,
-                private confirmationService: ConfirmationService
+                private confirmationService: ConfirmationService,
+                private capitalizeService: CapitalizePipe
     ){}
 
     ngOnInit(): void {
       this.initializeForm();
       this.loadAirlines();
+      this.onInputChange();
     }
 
 
@@ -38,6 +42,14 @@ export class AirlinesManagementTableComponent implements OnInit{
         name: [null, Validators.required],
         state: [true, Validators.required]
       })
+    }
+
+    private onInputChange(){
+      this.formSaveAirline.get('name')?.valueChanges.subscribe((value) =>{
+        if(value && value != null && value!=""){
+          this.formSaveAirline.get('name')?.setValue(this.capitalizeService.transform(value), { emitEvent: false });
+        }
+      });
     }
 
     private createAirline(){

@@ -7,4 +7,6 @@ export class ApiConstant {
     public static readonly MUNICIPALITY_API: String = "/municipality";
 
     public static readonly AIRLINE_API: string = "/airline";
+
+    public static readonly AIRPLANE_API: string = "/airplane";
 }
