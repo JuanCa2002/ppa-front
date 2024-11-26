@@ -87,3 +87,11 @@
     border: none;
     background-color: white;
 }
+
+:host ::ng-deep .p-calendar{
+    width: inherit;
+}
+
+:host ::ng-deep p-calendar{
+    width: 100%;
+}

@@ -2,11 +2,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { State } from '../../../../../enums/ppa-adm/state';
 import { AirlineFilterDTO } from '../../../../../dtos/air-infrastructure/airlines-management/airline-filter-dto';
+import { CapitalizePipe } from '../../../../shared/pipes/capitalize-case.pipe';
 
 @Component({
   selector: 'app-airlines-management-filter',
   templateUrl: './airlines-management-filter.component.html',
-  styleUrl: './airlines-management-filter.component.css'
+  styleUrl: './airlines-management-filter.component.css',
+  providers: [CapitalizePipe]
 })
 export class AirlinesManagementFilterComponent implements OnInit{
 
@@ -15,10 +17,11 @@ export class AirlinesManagementFilterComponent implements OnInit{
     @Output() onFilter = new EventEmitter<AirlineFilterDTO>();
     @Output() onCreate = new EventEmitter();
 
-    constructor(private fb: FormBuilder){}
+    constructor(private fb: FormBuilder, private capitalizeService: CapitalizePipe){}
 
     ngOnInit(): void {
       this.initializeForm();
+      this.onInputChange();
       this.states = [
         {value: State.ACTIVE, label: 'Active'},
         {value: State.INACTIVE, label: 'Inactive'},
@@ -38,6 +41,14 @@ export class AirlinesManagementFilterComponent implements OnInit{
         name: [null],
         state: [null]
       })
+    }
+
+    private onInputChange(){
+      this.formFilterAirline.get('name')?.valueChanges.subscribe((value) =>{
+        if(value && value != null && value!=""){
+          this.formFilterAirline.get('name')?.setValue(this.capitalizeService.transform(value), { emitEvent: false });
+        }
+      });
     }
 
     public createNewAirline(){

@@ -1,0 +1,58 @@
+<div>
+    <div class="card flex justify-content-end mt-4 mb-3">
+        <p-button label="New Register" [raised]="true" icon="pi pi-plus"  (onClick)="createNewRecord()"/>
+    </div>
+    <form [formGroup]="formFiltersAirplane" class="filters">
+        <div class="flex flex-column gap-2">
+            <label for="branch_airplane" class="font-bold">Branch</label>
+            <input 
+                pInputText 
+                id="branch_airplane" 
+                name="branch_airplane"
+                formControlName="branch" />
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="state_airplane" class="font-bold">State</label>
+            <p-dropdown 
+                [options]="states"
+                id="state_airplane"
+                name="state_airplane"
+                formControlName="state" 
+                optionLabel="label" 
+                optionValue="value" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="model_airplane" class="font-bold">Model</label>
+            <p-calendar
+                id="model_airplane"
+                name="model_airplane"
+                formControlName="model" 
+                view="year" 
+                dateFormat="yy"
+                showClear="true" 
+                placeholder="Select model (year)"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="airline_airplane" class="font-bold">Airline  <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="airlines"
+                id="airline_airplane"
+                name="airline_airplane"
+                formControlName="airlineId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                (onFilter)="getArlines($event)" 
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+    </form>
+</div>
+
+<div class="card flex justify-content-end mt-4 gap-4 button-filter">
+    <p-button  label="Filter" icon="pi pi-search" [disabled]="formFiltersAirplane.invalid" (onClick)="filter()"/>
+    <p-button class="clear-button" label="Clear" icon="pi pi-eraser" severity="secondary" (onClick)="clearFilter()"/>
+</div>
