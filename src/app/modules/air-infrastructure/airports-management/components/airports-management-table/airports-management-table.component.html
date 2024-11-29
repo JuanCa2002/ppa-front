@@ -1,0 +1,39 @@
+<div *ngIf="showTable" class="table-style-v1 card mt-5">
+    <p-table
+        [value]="airports"
+        [paginator]="true"
+        [rows]="rows" 
+        [totalRecords]="totalRecords" 
+        [lazy]="true" 
+        [tableStyle]="{ 'min-width': '50rem' }"
+        (onPage)="filterAirports($event)"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:15%">Name</th>
+                <th style="width:15%">Department</th>
+                <th style="width:15%">Location</th>
+                <th style="width:15%">Address</th>
+                <th style="width:15%">State</th>
+                <th style="width:25%" class="text-center">Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-airport>
+            <tr>
+                <td>{{ airport.name | CapitalizePipe}}</td>
+                <td>{{ airport.departmentName | CapitalizePipe}}</td>
+                <td>{{ airport.locationName | CapitalizePipe}}</td>
+                <td>{{ airport.address}}</td>
+                <td>{{ airport.state | CapitalizePipe}} <i [ngClass]="getStyleState(airport.state)" class="ml-2"></i></td>
+                <td class="text-center">
+                    <i class="pi pi-pencil cursor-pointer icon-style" (click)="editAirport(airport)"></i>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="card" *ngIf="!showTable">
+    <p-messages [(value)]="messages" [closable]="false" />
+</div>

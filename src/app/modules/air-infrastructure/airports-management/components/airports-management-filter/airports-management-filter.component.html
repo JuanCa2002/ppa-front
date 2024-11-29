@@ -1,0 +1,64 @@
+<div>
+    <div class="card flex justify-content-end mt-4 mb-3">
+        <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="createNewRecord()"/>
+    </div>
+    <form [formGroup]="formFilterAirport" class="filters">
+        <div class="flex flex-column gap-2">
+            <label for="name_airport" class="font-bold">Name</label>
+            <input 
+                pInputText 
+                id="name_airport" 
+                name="name_airport"
+                formControlName="name" />
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="state_airport" class="font-bold">State</label>
+            <p-dropdown 
+                [options]="states"
+                id="state_airport"
+                name="state_airport"
+                formControlName="state" 
+                optionLabel="label" 
+                optionValue="value" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="department_airport" class="font-bold">Department</label>
+            <p-dropdown 
+                [options]="departments"
+                id="department_airport"
+                name="department_airport"
+                formControlName="departmentId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                (onClear)="locations = []; this.formFilterAirport.get('locationId')?.setValue(undefined)"
+                (onChange)="getLocations($event)"
+                (onFilter)="getDepartments($event)" 
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="location_airport" class="font-bold">Location (Municipality)</label>
+            <p-dropdown 
+                [options]="locations"
+                id="location_airport"
+                name="location_airport"
+                formControlName="locationId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+    </form>
+</div>
+
+<div class="card flex justify-content-end mt-4 gap-4 button-filter">
+    <p-button  label="Filter" icon="pi pi-search" (onClick)="filter()"/>
+    <p-button class="clear-button" label="Clear" icon="pi pi-eraser" severity="secondary" (onClick)="clearFilters()"/>
+</div>
+

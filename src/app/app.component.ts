@@ -47,6 +47,11 @@ export class AppComponent {
                         label: 'Airplanes',
                         icon: 'pi pi-send',
                         command:(click)=>{this.router.navigate(['/' + RouterConstants.AIR_INFRASTRUCTURE_ROUTER + '/' + AirInfrastructureRouterConstants.AIRPLANE_ROUTER]);}
+                    },
+                    {
+                        label: 'Airports',
+                        icon: 'pi pi-arrows-alt',
+                        command: (click)=>{this.router.navigate(['/' + RouterConstants.AIR_INFRASTRUCTURE_ROUTER + '/' + AirInfrastructureRouterConstants.AIRPORT_ROUTER]);}
                     }
                 ]
             },

@@ -1,0 +1,16 @@
+<div [ngSwitch]="stateComponent">
+    <ng-container *ngSwitchDefault>
+        <app-main-section [title]="title" [items]="items" style="padding:5%;">
+           <app-airports-management-filter (onFilter)="filter($event)" (onSave)="save($event)"></app-airports-management-filter>
+           <app-airports-management-table #airportsTable (onUpdate)="update($event)"></app-airports-management-table>
+        </app-main-section>
+    </ng-container>
+    <ng-container *ngSwitchCase="'SAVE'">
+        <app-main-section [title]="title" [items]="items" style="padding:5%;">
+            <app-airports-management-create 
+                (onGoBack)="comeBack()" 
+                [isUpdate]="isUpdate" 
+                [airport]="airport"></app-airports-management-create>
+        </app-main-section>
+    </ng-container>
+</div>

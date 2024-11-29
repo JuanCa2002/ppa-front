@@ -79,6 +79,15 @@
     border-radius: 10px; 
 }
 
+.state-medium {
+    display: inline-block;
+    width: 10px;
+    margin-right: 8px;
+    height: 10px; 
+    background: var(--yellow-500) 0% 0% no-repeat padding-box;
+    border-radius: 10px; 
+}
+
 .required {
     color: var(--red-500);
 }
