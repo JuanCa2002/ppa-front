@@ -5,6 +5,10 @@ export class GeneralMessagesConstants {
 
     public static readonly GENERAL_CONFIRM_STATE_MESSAGE = 'Are you sure you wanna change the state of';
 
+    public static readonly GENERAL_RETURN_MESSAGE = 'Are you sure you wanna go back?';
+
+    public static readonly GENERAL_CANCEL_MESSAGE = 'Are you sure you wanna cancel this action?';
+
     public static readonly GENERAL_CREATE_MESSAGE = 'Are you sure you wanna create a new';
 
     public static readonly GENERAL_UPDATE_MESSAGE = 'Are you sure you wanna update';
@@ -12,6 +16,10 @@ export class GeneralMessagesConstants {
     public static readonly CHANGE_STATE_HEADER_MESSAGE = 'Change State';
 
     public static readonly NEW_HEADER_MESSAGE = 'Create New';
+    
+    public static readonly RETURN_HEADER_MESSAGE = 'Go Back';
+
+    public static readonly CANCEL_HEADER_MESSAGE = 'Cancel';
 
     public static readonly UPDATE_STATE_HEADER_MESSAGE = 'Update State';
 

@@ -1,0 +1,81 @@
+<div>
+    <div class="card flex justify-content-end mt-4 mb-3">
+        <p-button label="Go Back" 
+                  [raised]="true" 
+                  severity="secondary" 
+                  class="clear-button" 
+                  icon="pi pi-chevron-circle-left"
+                  (onClick)="openConfirmReturn()"/>
+    </div>
+    <form [formGroup]="formSaveAirport" class="form-save mb-6">
+        <div class="flex flex-column gap-2">
+            <label for="name_airport_save" class="font-bold">Name <span class="required">*</span></label>
+            <input 
+                pInputText 
+                id="name_airport_save" 
+                name="name_airport_save"
+                formControlName="name" />
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="!isUpdate">
+            <label for="department_airport_save" class="font-bold">Department <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="departments"
+                id="department_airport_save"
+                name="department_airport_save"
+                formControlName="departmentId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                (onClear)="locations = []; this.formSaveAirport.get('locationId')?.setValue(undefined)"
+                (onChange)="getLocations($event)"
+                (onFilter)="getDepartments($event)" 
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="!isUpdate">
+            <label for="location_airport_save" class="font-bold">Location (Municipality) <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="locations"
+                id="location_airport_save"
+                name="location_airport_save"
+                formControlName="locationId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="!isUpdate">
+            <label for="address_airport_save" class="font-bold">Address <span class="required">*</span></label>
+            <input 
+                pInputText 
+                id="address_airport_save" 
+                name="address_airport_save"
+                formControlName="address" />
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="isUpdate">
+            <label for="state_airport_save" class="font-bold">State <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="states"
+                id="state_airport_save"
+                name="state_airport_save"
+                formControlName="state" 
+                optionLabel="label" 
+                optionValue="value" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+    </form>
+
+    <p-divider />
+
+    <div class="card flex justify-content-center mt-4 gap-4 button-filter">
+        <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="openConfirmCancel()"/>
+        <p-button label="{{isUpdate ? 'Update' : 'Save'}}" icon="pi pi-check" [disabled]="formSaveAirport.invalid" (onClick)="openConfirmSave()"/>
+    </div>
+</div>
+
+<p-toast position="bottom-center" />
+<p-confirmDialog />

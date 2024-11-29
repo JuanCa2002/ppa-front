@@ -17,6 +17,10 @@ import { AirInfrastructureRouterConstants } from '../../constants/routers/air-in
         {
           path: AirInfrastructureRouterConstants.AIRPLANE_ROUTER,
           loadChildren: () => import("./airplanes-management/airplanes-management.module").then((m) => m.AirplanesManagementModule)
+        },
+        {
+          path: AirInfrastructureRouterConstants.AIRPORT_ROUTER,
+          loadChildren: () => import("./airports-management/airports-management.module").then((m) => m.AirportsManagementModule)
         }
     ]),
   ]
