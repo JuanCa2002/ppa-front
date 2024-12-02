@@ -31,6 +31,8 @@
     <p-button class="clear-button" label="Clear" icon="pi pi-eraser" severity="secondary" (onClick)="clearFilters()"/>
 </div>
 
+<p-divider type="solid" />
+
 <div class="card" *ngIf="!showTable">
     <p-messages [(value)]="messages" [closable]="false" />
 </div>

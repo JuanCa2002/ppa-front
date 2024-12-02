@@ -5,10 +5,12 @@ import { LoadingService } from './services/loading.service';
 import { RouterConstants } from './constants/routers/router-constants';
 import { LocationsRouterConstants } from './constants/routers/locations/locations-router-constants';
 import { AirInfrastructureRouterConstants } from './constants/routers/air-infrastructure/air-infrastructure-router-constants';
+import { FlightsRouterConstants } from './constants/routers/flights/flights-router-constants';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
     items: MenuItem[] | undefined;
@@ -57,7 +59,8 @@ export class AppComponent {
             },
             {
                 label: 'Flights',
-                icon: 'pi pi-cloud'
+                icon: 'pi pi-cloud',
+                command:(click)=>{this.router.navigate(['/' + RouterConstants.FLIGHTS_ROUTER + '/' + FlightsRouterConstants.FLIGHTS_ROUTER]);}
             }
         ];
     }

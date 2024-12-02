@@ -104,3 +104,25 @@
 :host ::ng-deep p-calendar{
     width: 100%;
 }
+
+@font-face {
+    font-family: 'Berkslund';
+    src: local('Berkslund Bold'), local('Berkslund-Bold'),
+        url('assets/fonts/Berkslund-Bold/Berkslund-Bold.woff2') format('woff2'),
+        url('assets/fonts/Berkslund-Bold/Berkslund-Bold.woff') format('woff'),
+        url('assets/fonts/Berkslund-Bold/Berkslund-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+:host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link{
+    font-family: 'Berkslund', Arial, sans-serif !important;
+}
+
+:host ::ng-deep .p-component{
+    font-family: 'Berkslund', Arial, sans-serif !important;
+}
+
+body {
+    font-family: 'Berkslund', Arial, sans-serif !important;
+}
