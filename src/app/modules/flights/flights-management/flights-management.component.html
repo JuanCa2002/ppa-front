@@ -1,9 +1,9 @@
 <div [ngSwitch]="stateComponent">
     <ng-container *ngSwitchDefault>
         <app-main-section [title]="title" [items]="items" style="padding:5%;">
-           <app-airlines-management-filter (onFilter)="filterAirlines($event)" (onCreate)="createNewAirline()"></app-airlines-management-filter>
+           <app-flights-management-filter (onFilter)="filter($event)"></app-flights-management-filter>
            <p-divider type="solid" />
-           <app-airlines-management-table  #airlinesTable></app-airlines-management-table>
+           <app-flights-management-search-result #showResultsPanel></app-flights-management-search-result>
         </app-main-section>
     </ng-container>
 </div>

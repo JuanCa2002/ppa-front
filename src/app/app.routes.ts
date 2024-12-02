@@ -11,6 +11,10 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/air-infrastructure/air-infrastructure.module').then(m => m.AirInfrastructureModule)
     },
     {
+        path: RouterConstants.FLIGHTS_ROUTER,
+        loadChildren: () => import('./modules/flights/flights.module').then(m => m.FlightsModule)
+    },
+    {
         path: "",
         redirectTo: RouterConstants.LOCATIONS_ROUTER,
         pathMatch: "full"

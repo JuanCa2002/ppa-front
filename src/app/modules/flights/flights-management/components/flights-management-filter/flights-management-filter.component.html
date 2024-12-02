@@ -1,0 +1,164 @@
+<div>
+    <div class="card flex justify-content-end mt-4 mb-3">
+        <p-button label="New Register" [raised]="true" icon="pi pi-plus"/>
+    </div>
+    <form [formGroup]="formFilterFlights" class="filters">
+        <div class="flex flex-column gap-2">
+            <label for="department_origin_flight" class="font-bold">Department Origin  <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="departmentsOrigins"
+                id="department_origin_flight"
+                name="department_origin_flight"
+                formControlName="departmentOriginId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                (onClear)="origins = []; this.formFilterFlights.get('originId')?.setValue(undefined)"
+                (onChange)="getLocations('ORIGIN', $event)"
+                (onFilter)="getDepartments('ORIGIN', $event)" 
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="origin_flight" class="font-bold">Origin (Municipality)  <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="origins"
+                id="origin_flight"
+                name="origin_flight"
+                formControlName="originId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="department_destiny_flight" class="font-bold">Department Destiny <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="departmentsDestinations"
+                id="department_destiny_flight"
+                name="department_destiny_flight"
+                formControlName="departmentDestinyId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                (onClear)="destinations = []; this.formFilterFlights.get('destinyId')?.setValue(undefined)"
+                (onChange)="getLocations('DESTINY',$event)"
+                (onFilter)="getDepartments('DESTINY', $event)" 
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="destiny_flight" class="font-bold">Destiny (Municipality)  <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="destinations"
+                id="destiny_flight"
+                name="destiny_flight"
+                formControlName="destinyId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('airlineId')?.value">
+            <label for="airline_flight" class="font-bold">Airline</label>
+            <p-dropdown 
+                [options]="airlines"
+                id="airline_flight"
+                name="airline_flight"
+                formControlName="airlineId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                (onFilter)="getArlines($event)" 
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('exitDate')?.value">
+            <label for="exit_date_flight" class="font-bold">Exit Date</label>
+            <p-calendar 
+                formControlName="exitDate" 
+                [showIcon]="true"
+                dateFormat="yy-mm-dd" 
+                [iconDisplay]="'input'"  
+                inputId="exit_date_flight" 
+                [showOnFocus]="true" />
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('exitTime')?.value">
+            <label for="exit_time_flight" class="font-bold">Exit Time</label>
+            <p-calendar 
+                formControlName="exitTime" 
+                [showIcon]="true"
+                [iconDisplay]="'input'"  
+                [timeOnly]="true" 
+                inputId="exit_time_flight">
+                    <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                        <i 
+                            class="pi pi-clock pointer-events-none pointer-events-none" 
+                            (click)="clickCallBack($event)"></i>
+                    </ng-template>
+            </p-calendar>
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('state')?.value">
+            <label for="state_flight" class="font-bold">State</label>
+            <p-dropdown 
+                [options]="states"
+                id="state_flight"
+                name="state_flight"
+                formControlName="state" 
+                optionLabel="label" 
+                optionValue="value" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('isDirect')?.value">
+            <label for="isDirect_flight" class="font-bold">Has Scales?</label>
+            <p-inputSwitch 
+                formControlName="isDirect" 
+                id="isDirect_flight"
+                name="isDirect_flight"
+                />
+        </div>
+    </form>
+</div>
+
+<div class="card mt-4">
+    <div class="flex align-items-center justify-content-between">
+        <div>
+            <p-button (onClick)="op.toggle($event)" label="Add Filters" icon="pi pi-filter-fill" severity="info"></p-button>
+            <p-overlayPanel #op>
+                <div class="flex align-items-center justify-content-between gap-3 mb-4">
+                    <h3 class="font-semibold mb-5">Select All</h3> 
+                    <p-inputSwitch id="select-all-filters" name="select-all-filters" (onChange)="onSelectAllChange($event)"/>
+                </div>
+                <p-divider align="center" type="solid">
+                    <b class="text-500">Optional Filters</b>
+                </p-divider>
+                <div class="flex align-items-center">
+                    <form [formGroup]="formAddFilters">
+                        <div class="flex align-items-center gap-3 mb-3" *ngFor="let filter of optionalFilters">
+                            <label for="optional-filter-{{filter.formControlName}}" class="font-normal w-6rem">{{filter.label}}</label>
+                            <p-inputSwitch
+                                (onChange)="changeValueForm(filter.formControlName, $event)" 
+                                formControlName="{{filter.formControlName}}" 
+                                id="optional-filter-{{filter.formControlName}}"
+                                name="optional-filter-{{filter.formControlName}}"
+                                 />
+                        </div>
+                    </form>
+                </div>
+            </p-overlayPanel>
+        </div>
+        <div class="flex gap-4 button-filter">
+            <p-button label="Filter" icon="pi pi-search" (onClick)="filter()" [disabled]="formFilterFlights.invalid"></p-button>
+            <p-button class="clear-button" label="Clear" icon="pi pi-eraser" severity="secondary" (onClick)="formFilterFlights.reset()"></p-button>
+        </div>
+    </div>
+</div>
+

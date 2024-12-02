@@ -2,6 +2,7 @@
     <ng-container *ngSwitchDefault>
         <app-main-section [title]="title" [items]="items" style="padding:5%;">
             <app-airplanes-managament-table (onFilter)="filter($event)" (onSave)="save()"></app-airplanes-managament-table>
+            <p-divider type="solid" />
             <app-airplanes-managament-table-show #airplanesTable></app-airplanes-managament-table-show>
         </app-main-section>
     </ng-container>
