@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, output, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartmentDto } from '../../../../../dtos/locations/department-management/department.dto';
 import { MunicipalityDTO } from '../../../../../dtos/locations/municipalities-management/municipality.dto';
@@ -33,6 +33,7 @@ export class FlightsManagementFilterComponent implements OnInit{
   public states: any[] = [];
   public airlines: AirlineDTO[] = [];
   @Output() onFilter = new EventEmitter<FlightFilterDTO>();
+  @Output() onSave = new EventEmitter();
 
   constructor(private fb: FormBuilder, private departmentApiService: DepartmentApiService,
     private municipalityApiService: MunicipalityApiService, private messageService: MessageService,
@@ -100,6 +101,10 @@ export class FlightsManagementFilterComponent implements OnInit{
       airlineId: [false],
       isDirect: [false]
     });
+  }
+
+  public createNewRegister(){
+    this.onSave.emit();
   }
 
 

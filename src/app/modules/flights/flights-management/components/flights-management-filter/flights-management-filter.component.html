@@ -1,6 +1,6 @@
 <div>
     <div class="card flex justify-content-end mt-4 mb-3">
-        <p-button label="New Register" [raised]="true" icon="pi pi-plus"/>
+        <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="createNewRegister()"/>
     </div>
     <form [formGroup]="formFilterFlights" class="filters">
         <div class="flex flex-column gap-2">

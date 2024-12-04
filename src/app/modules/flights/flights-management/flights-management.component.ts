@@ -24,5 +24,11 @@ export class FlightsManagementComponent implements OnInit{
     this.showResultsPanel.getFlights(event);
   }
 
+  public save(){
+    this.items?.push({label: 'Create New Fight'});
+    this.stateComponent = 'SAVE';
+    this.title = 'Create New Flight';
+  }
+
 
 }
