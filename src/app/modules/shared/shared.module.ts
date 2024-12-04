@@ -19,6 +19,8 @@ import { ConfirmationService } from "primeng/api";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { MessagesModule } from 'primeng/messages';
 import { CalendarModule } from 'primeng/calendar';
+import { SectionStepComponent } from "./components/section-step/section-step.component";
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
     imports: [
@@ -39,10 +41,12 @@ import { CalendarModule } from 'primeng/calendar';
         ConfirmDialogModule,
         FontAwesomeModule,
         MessagesModule,
-        CalendarModule
+        CalendarModule,
+        InputNumberModule
     ],
     declarations: [
         MainSectionComponent,
+        SectionStepComponent,
         CapitalizePipe
     ],
     exports: [
@@ -61,11 +65,13 @@ import { CalendarModule } from 'primeng/calendar';
         CommonModule,
         InputSwitchModule,
         MainSectionComponent,
+        SectionStepComponent,
         CapitalizePipe,
         ConfirmDialogModule,
         FontAwesomeModule,
         MessagesModule,
-        CalendarModule
+        CalendarModule,
+        InputNumberModule
     ],
     providers:[ConfirmationService]
   })

@@ -1,0 +1,21 @@
+<div class="card">
+    <p-steps 
+        [model]="items" 
+        [readonly]="false" 
+        [activeIndex]="activeIndex" 
+        (activeIndexChange)="onActiveIndexChange($event)">
+    </p-steps>
+    <div class="step-content">
+        <ng-container [ngSwitch]="activeIndex">
+            <div *ngSwitchCase="0">
+                <app-flights-management-step-basic-info></app-flights-management-step-basic-info>
+            </div>
+            <div *ngSwitchCase="1">
+                <!--TODO: Create Step Number 2 Itinerary-->
+            </div>
+            <div *ngSwitchCase="2">
+               <!--TODO: Create Step Number 3 Scales-->
+            </div>
+        </ng-container>
+    </div>
+</div>

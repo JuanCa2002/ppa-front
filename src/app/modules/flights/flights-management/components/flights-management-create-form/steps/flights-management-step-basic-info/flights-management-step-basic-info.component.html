@@ -1,0 +1,174 @@
+<app-section-step [numeral]="1" [title]="'Origin Information'">
+    <div>
+        <form [formGroup]="formInformationOrigin" class="grid">
+            <div class="flex flex-column col gap-2">
+                <label for="save_department_origin_flight" class="font-bold">Department Origin  <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="departmentsOrigins"
+                    id="save_department_origin_flight"
+                    name="save_department_origin_flight"
+                    formControlName="departmentOriginId" 
+                    optionLabel="name"
+                    filter="true"
+                    filterBy="name"
+                    appendTo="body"
+                    (onClear)="origins = []; airportsOrigins = [];; this.formInformationOrigin.get('originId')?.setValue(undefined)"
+                    (onChange)="getLocations('ORIGIN', $event)"
+                    (onFilter)="getDepartments('ORIGIN', $event)" 
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+            <div class="flex flex-column gap-2 col">
+                <label for="save_origin_flight" class="font-bold">Origin (Municipality)  <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="origins"
+                    id="save_origin_flight"
+                    name="save_origin_flight"
+                    formControlName="originId"
+                    (onClear)="airportsOrigins = []; this.formInformationOrigin.get('airportOriginId')?.setValue(undefined)"
+                    (onChange)="getAirports('ORIGIN', $event)" 
+                    optionLabel="name"
+                    filter="true"
+                    filterBy="name"
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+            <div class="flex flex-column gap-2 col">
+                <label for="save_origin_airport_flight" class="font-bold">Airport Origin <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="airportsOrigins"
+                    id="save_origin_airport_flight"
+                    name="save_origin_airport_flight"
+                    formControlName="airportOriginId" 
+                    optionLabel="name"
+                    filter="true"
+                    filterBy="name"
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+        </form>
+    </div>
+</app-section-step>
+
+<app-section-step [numeral]="2" [title]="'Destiny Information'">
+    <div>
+        <form [formGroup]="formInformationDestiny" class="grid">
+            <div class="flex flex-column col gap-2">
+                <label for="save_department_destiny_flight" class="font-bold">Department Destiny  <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="departmentsDestinations"
+                    id="save_department_destiny_flight"
+                    name="save_department_destiny_flight"
+                    formControlName="departmentDestinyId" 
+                    optionLabel="name"
+                    filter="true"
+                    filterBy="name"
+                    appendTo="body"
+                    (onClear)="destinations = []; airportsDestinations = []; this.formInformationDestiny.get('destinyId')?.setValue(undefined)"
+                    (onChange)="getLocations('DESTINY', $event)"
+                    (onFilter)="getDepartments('DESTINY', $event)" 
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+            <div class="flex flex-column gap-2 col">
+                <label for="save_destiny_flight" class="font-bold">Destiny (Municipality)  <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="destinations"
+                    id="save_destiny_flight"
+                    name="save_destiny_flight"
+                    formControlName="destinyId"
+                    (onClear)="airportsDestinations = []; this.formInformationDestiny.get('airportDestinyId')?.setValue(undefined)"
+                    (onChange)="getAirports('DESTINY', $event)" 
+                    optionLabel="name"
+                    filter="true"
+                    filterBy="name"
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+            <div class="flex flex-column gap-2 col">
+                <label for="save_destiny_airport_flight" class="font-bold">Airport Destiny <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="airportsDestinations"
+                    id="save_destiny_airport_flight"
+                    name="save_destiny_airport_flight"
+                    formControlName="airportDestinyId" 
+                    optionLabel="name"
+                    filter="true"
+                    filterBy="name"
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+        </form>
+    </div>
+</app-section-step>
+
+<app-section-step [numeral]="3" [title]="'Other Details'">
+    <div>
+        <form [formGroup]="formOtherDetails" class="grid">
+            <div class="flex flex-column col gap-2">
+                <label for="save_airline_flight" class="font-bold">Airline <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="airlines"
+                    id="save_airline_flight"
+                    name="save_airline_flight"
+                    formControlName="airlineId" 
+                    optionLabel="name"
+                    filter="true"
+                    filterBy="name"
+                    appendTo="body"
+                    (onClear)="airplanes = [];this.formOtherDetails.get('airplaneId')?.setValue(undefined)"
+                    (onChange)="getAirplanes($event)"
+                    (onFilter)="getAirlines($event)" 
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+            <div class="flex flex-column col gap-2">
+                <label for="save_airplane_flight" class="font-bold">Airplane <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="airplanes"
+                    id="save_airplane_flight"
+                    name="save_airplane_flight"
+                    formControlName="airplaneId" 
+                    appendTo="body"
+                    optionValue="id" 
+                    placeholder="Select"
+                    showClear="true">
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2" *ngIf="selectedOption">
+                            <div>{{ selectedOption.branch }} - {{selectedOption.model}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-airplane pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ airplane.branch }} - {{airplane.model}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="flex flex-column col gap-2">
+                <label for="save_price_flight" class="font-bold">Price <span class="required">*</span></label>
+                <p-inputNumber 
+                    formControlName="price"
+                    inputId="save_price_flight" 
+                    name="save_price_flight"
+                    mode="currency" 
+                    currency="USD" 
+                    locale="en-US" /> 
+            </div>
+        </form>
+    </div>
+</app-section-step>
+
+<p-divider />
+
+<div class="card flex justify-content-center mt-4 gap-4 button-filter">
+    <p-button label="Cancel" icon="pi pi-times" severity="secondary"/>
+    <p-button label="Next" icon="pi pi-angle-right"/>
+</div>

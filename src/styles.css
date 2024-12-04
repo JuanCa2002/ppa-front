@@ -54,6 +54,8 @@
     border-width: 2px 0 1px 0;
     border-color: #e5e7eb;
     border-top-left-radius: 5%;
+    background-color: #46cdcf;
+    color: white;
 }
 
 .icon-style {
@@ -117,6 +119,34 @@
 
 :host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link{
     font-family: 'Berkslund', Arial, sans-serif !important;
+    color: white;
+    border-radius: 6px;
+}
+
+:host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link:hover{
+   background-color: #e4f6f7;
+   color: black;
+}
+
+:host ::ng-deep .p-menubar.p-focus {
+    background: #46cdcf !important;
+    color: black !important;
+}
+
+:host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content{
+    background: #46cdcf !important;
+    color: black !important;
+ }
+
+:host ::ng-deep .p-menubar {
+    background-color: #46cdcf;
+    border-radius: 0;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+    background: #46cdcf;
+    color: white;
+    padding: 1rem;
 }
 
 :host ::ng-deep .p-component{
@@ -124,5 +154,6 @@
 }
 
 body {
+    margin: 0;
     font-family: 'Berkslund', Arial, sans-serif !important;
 }
