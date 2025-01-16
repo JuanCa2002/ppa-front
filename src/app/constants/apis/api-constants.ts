@@ -13,4 +13,8 @@ export class ApiConstant {
     public static readonly AIRPORT_API: string = "/airport";
 
     public static readonly FLIGHT_API: string = "/flight";
+
+    public static readonly ITINERARY_API: string = "/itinerary";
+
+    public static readonly SCALE_API: string = "/scale";
 }

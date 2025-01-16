@@ -12,8 +12,8 @@
                     filter="true"
                     filterBy="name"
                     appendTo="body"
-                    (onClear)="origins = []; airportsOrigins = [];; this.formInformationOrigin.get('originId')?.setValue(undefined)"
-                    (onChange)="getLocations('ORIGIN', $event)"
+                    (onClear)="origins = []; airportsOrigins = []; this.formInformationOrigin.get('originId')?.setValue(undefined); this.formInformationOrigin.get('airportOriginId')?.setValue(undefined)"
+                    (onChange)="getLocations('ORIGIN', false, $event)"
                     (onFilter)="getDepartments('ORIGIN', $event)" 
                     optionValue="id" 
                     placeholder="Select"
@@ -67,8 +67,8 @@
                     filter="true"
                     filterBy="name"
                     appendTo="body"
-                    (onClear)="destinations = []; airportsDestinations = []; this.formInformationDestiny.get('destinyId')?.setValue(undefined)"
-                    (onChange)="getLocations('DESTINY', $event)"
+                    (onClear)="destinations = []; airportsDestinations = []; this.formInformationDestiny.get('destinyId')?.setValue(undefined); this.formInformationDestiny.get('airportDestinyId')?.setValue(undefined)"
+                    (onChange)="getLocations('DESTINY', false, $event)"
                     (onFilter)="getDepartments('DESTINY', $event)" 
                     optionValue="id" 
                     placeholder="Select"
@@ -169,6 +169,9 @@
 <p-divider />
 
 <div class="card flex justify-content-center mt-4 gap-4 button-filter">
-    <p-button label="Cancel" icon="pi pi-times" severity="secondary"/>
-    <p-button label="Next" icon="pi pi-angle-right"/>
+    <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancelCreate()"/>
+    <p-button label="Next" icon="pi pi-angle-right" [disabled]="!isValidForm()" (onClick)="nextStep()"/>
 </div>
+
+<p-toast position="bottom-center" />
+<p-confirmDialog />

@@ -122,7 +122,7 @@ export class FlightsManagementFilterComponent implements OnInit{
         this.departmentsOrigins = response.data;
       }
     }, error=>{
-      this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
     })
   }
 
@@ -137,7 +137,7 @@ export class FlightsManagementFilterComponent implements OnInit{
         this.origins = response;
       }
     }, error =>{
-      this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
     })
 }
 
@@ -151,7 +151,7 @@ public getArlines(event?:any){
   this.airlineApiService.getPaginatedAirlines$(filter).subscribe((response) =>{
     this.airlines = response.data;
   }, error =>{
-    this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
   })
 }
 

@@ -11,7 +11,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="'SAVE'">
         <app-main-section [title]="title" [items]="items" style="padding:5%;">
-            <app-flights-management-create-form></app-flights-management-create-form>
+            <app-flights-management-create-form (onCancel)="backToFilter()"></app-flights-management-create-form>
         </app-main-section>
     </ng-container>
 </div>

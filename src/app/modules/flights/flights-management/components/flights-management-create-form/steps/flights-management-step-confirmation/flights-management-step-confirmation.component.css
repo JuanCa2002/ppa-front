@@ -1,0 +1,10 @@
+.numeral {
+    background-color: var(--bluegray-800);
+    color: white;
+}
+
+.wrap-text {
+    white-space: normal;
+    word-break: break-word;
+    max-width: 200px; 
+}

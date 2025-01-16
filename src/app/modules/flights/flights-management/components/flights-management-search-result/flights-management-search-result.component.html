@@ -1,35 +1,42 @@
 <div class="card" *ngIf="showData">
-    <p-carousel 
-        [value]="flights" 
-        [numVisible]="3" 
-        [numScroll]="3" 
-        [circular]="false">
-            <ng-template let-flight pTemplate="item" id="carousel-flights-items">
-                <div class="w-auto border-1 surface-border border-round m-2 p-3">
-                    <div class="mb-3">
-                        <div class="relative mx-auto border-1 surface-border">
-                            <img 
-                                src="../../../../../../assets/img/ppa-air-logo.png" 
-                                [alt]="flight.municipalityOriginName + ' - ' + flight.municipalityDestinyName"
-                                width="250" 
-                                class="border-round" />
+    <p-dataView 
+        [value]="flights" layout="list">
+            <ng-template let-flight pTemplate="list">
+                <div class="grid">
+                    <div *ngFor="let flight of flights let index = index;" class="background col-3 border-1 surface-border border-round m-2 p-3">
+                        <div class="w-full mb-3">
+                            <div class="relative w-auto border-1 surface-border">
+                                <img 
+                                    src="../../../../../../assets/img/ppa-air-logo.png" 
+                                    [alt]="flight.municipalityOriginName + ' - ' + flight.municipalityDestinyName"
+                                    class="border-round h-full w-full" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 font-medium">
-                        {{ flight.municipalityOriginName + ' - ' + flight.municipalityDestinyName }}
-                    </div>
-                    <div class="flex justify-content-between align-items-center">
-                    <div class="mt-0 font-semibold text-xl">
-                        {{ '$' + flight.price }}
-                    </div>
-                        <span>
-                            <p-button icon="pi pi-heart" severity="secondary" [outlined]="true" />
-                            <p-button icon="pi pi-shopping-cart" styleClass="ml-2" />
-                        </span>
+                        <div class="mb-3 font-medium">
+                            {{ flight.municipalityOriginName + ' - ' + flight.municipalityDestinyName }}
+                        </div>
+                        <div class="flex justify-content-between align-items-center">
+                            <div class="mt-0 font-semibold text-xl">
+                                {{ '$' + flight.price }}
+                            </div>
+                            <div class="flex align-items-center justify-content-between gap-2">
+                                <i [ngStyle]="{ 'color': findColor(flight.state!) }" class="fadeout animation-duration-1000 animation-iteration-infinite pi pi-circle-fill"></i>
+                                <span [ngStyle]="{ 'color': findColor(flight.state!) }">{{findLabel(flight.state!)}}</span>
+                            </div>
+                            <span>
+                                <p-button icon="pi pi-search" severity="secondary" [outlined]="true" />
+                                <p-button icon="pi pi-arrow-up-right" styleClass="ml-2" severity="help" />
+                                <p-button icon="pi pi-pencil" styleClass="ml-2" />
+                            </span>
+                        </div>
                     </div>
                 </div>
             </ng-template>
-    </p-carousel>
+    </p-dataView>
+</div>
+
+<div class="card flex justify-center align-items-center" *ngIf="showData">
+    <p-paginator class="w-full" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]" />
 </div>
 
 <div class="card" *ngIf="!showData">

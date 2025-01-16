@@ -14,6 +14,11 @@ export class FlightApiService {
 
     constructor(private httpClient:HttpClient){}
 
+
+    public postFlight$(flight: FlightDTO): Observable<FlightDTO>{
+       return this.httpClient.post<FlightDTO>(FlightApiConstants.URL_FLIGHT, flight);
+    }
+
     public getPaginatedFlights$(filter: FlightFilterDTO):Observable<PaginatedResponseDTO<FlightDTO>>{
         let params = new HttpParams()
         .set('rowsPerPage', filter.rowsPerPage.toString())
