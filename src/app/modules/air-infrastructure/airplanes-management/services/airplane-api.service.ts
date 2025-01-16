@@ -34,6 +34,10 @@ export class AirplaneApiService {
         return this.httpClient.get<PaginatedResponseDTO<AirplaneDTO>>(AirplaneApiConstants.URL_AIRLINE,{params})
     }
 
+    public getAirplaneById$(id: number): Observable<AirplaneDTO>{
+      return this.httpClient.get<AirplaneDTO>(`${AirplaneApiConstants.URL_AIRLINE}/${id}`);
+    }
+
     public postAirplane$(airplane: AirplaneDTO):Observable<AirplaneDTO>{
       return this.httpClient.post<AirplaneDTO>(AirplaneApiConstants.URL_AIRLINE,airplane);
     }

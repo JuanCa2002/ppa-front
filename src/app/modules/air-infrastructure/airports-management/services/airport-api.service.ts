@@ -37,6 +37,10 @@ export class AirportApiService {
         return this.httpClient.get<PaginatedResponseDTO<AirportDTO>>(AirportApiConstants.URL_AIRPORT,{params})
     }
 
+    public getAirportById(id: number): Observable<AirportDTO>{
+        return this.httpClient.get<AirportDTO>(`${AirportApiConstants.URL_AIRPORT}/${id}`);
+    }
+
     public postAirports$(airport: AirportDTO):Observable<AirportDTO>{
         return this.httpClient.post<AirportDTO>(AirportApiConstants.URL_AIRPORT, airport);
     }

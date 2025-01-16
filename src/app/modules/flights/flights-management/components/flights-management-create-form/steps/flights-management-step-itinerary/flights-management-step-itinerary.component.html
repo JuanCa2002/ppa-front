@@ -1,0 +1,95 @@
+<app-section-step [title]="'Itinerary Information'" [sectionWithNumeral]="false">
+    <div>
+        <form [formGroup]="formItineraryData" class="grid">
+            <div class="flex flex-column col-3 gap-2">
+                <label for="save_estimated_time_flight" class="font-bold">Estimated Time Travel <span class="required">*</span></label>
+                <p-inputNumber 
+                    formControlName="estimatedTime"
+                    inputId="save_estimated_time_flight" 
+                    name="save_estimated_time_flight"
+                    (onInput)="setArrivalTime()" 
+                    [min]="0"
+                    [max]="100"/> 
+            </div>
+            <div class="flex flex-column col-3 gap-2">
+                <label for="save_unite_estimated_time_flight" class="font-bold">Unit Estimated Time <span class="required">*</span></label>
+                <p-dropdown 
+                    [options]="unitsTime"
+                    id="save_unite_estimated_time_flight"
+                    name="save_unite_estimated_time_flight"
+                    formControlName="unitTime" 
+                    optionLabel="label"
+                    (onChange)="setArrivalTime()"  
+                    optionValue="value" 
+                    placeholder="Select"
+                    showClear="true"/>
+            </div>
+            <div class="flex flex-column col-3 gap-2">
+                <label for="save_exit_date_flight" class="font-bold">Exit Date <span class="required">*</span></label>
+                <p-calendar 
+                    formControlName="exitDate" 
+                    [showIcon]="true"
+                    [yearNavigator]="true"
+                    [monthNavigator]="true"
+                    [iconDisplay]="'input'"
+                    [minDate]="currentDate"  
+                    inputId="save_exit_date_flight">
+                </p-calendar>
+            </div>
+            <div class="flex flex-column col-3 gap-2">
+                <label for="save_exit_time_flight" class="font-bold">Exit Time <span class="required">*</span></label>
+                <p-calendar 
+                    formControlName="exitTime" 
+                    [showIcon]="true"
+                    [iconDisplay]="'input'"  
+                    [timeOnly]="true"
+                    [hourFormat]="'HH:mm'"
+                    (onSelect)="setArrivalTime()" 
+                    inputId="save_exit_time_flight">
+                        <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                            <i 
+                                class="pi pi-clock pointer-events-none pointer-events-none" 
+                                (click)="clickCallBack($event)"></i>
+                        </ng-template>
+                </p-calendar>
+            </div>
+            <div class="flex flex-column col-3 gap-2">
+                <label for="save_arrival_date_flight" class="font-bold">Arrival Date <span class="required">*</span></label>
+                <p-calendar 
+                    formControlName="arrivalDate" 
+                    [showIcon]="true"
+                    [iconDisplay]="'input'"
+                    [yearNavigator]="true"
+                    [minDate]="currentDate"  
+                    [monthNavigator]="true"  
+                    inputId="save_arrival_date_flight">
+                </p-calendar>
+            </div>
+            <div class="flex flex-column col-3 gap-2">
+                <label for="save_arrival_time_flight" class="font-bold">Arrival Time <span class="required">*</span></label>
+                <p-calendar 
+                    formControlName="arrivalTime" 
+                    [showIcon]="true"
+                    [iconDisplay]="'input'"  
+                    [timeOnly]="true" 
+                    inputId="save_arrival_time_flight">
+                        <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                            <i 
+                                class="pi pi-clock pointer-events-none pointer-events-none" 
+                                (click)="clickCallBack($event)"></i>
+                        </ng-template>
+                </p-calendar>
+            </div>
+        </form>
+    </div>
+</app-section-step>
+
+<p-divider />
+
+<div class="card flex justify-content-center mt-4 gap-4 button-filter">
+    <p-button label="Previous" icon="pi pi-angle-left" (onClick)="onPreviousStep.emit()"/>
+    <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancelCreate()"/>
+    <p-button label="Next" icon="pi pi-angle-right" [disabled]="!formItineraryData.valid" (onClick)="nextStep()"/>
+</div>
+
+<p-confirmDialog />

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -10,6 +10,7 @@ export class FlightsManagementCreateFormComponent implements OnInit{
 
   public items: MenuItem[] | undefined;
   public activeIndex: number = 0;
+  @Output() onCancel = new EventEmitter();
 
   ngOnInit(): void {
     this.items = [
@@ -21,12 +22,27 @@ export class FlightsManagementCreateFormComponent implements OnInit{
       },
       {
           label: 'Scales'
+      },
+      {
+          label: 'Confirmation'
       }
     ];
   }
 
   onActiveIndexChange(event: number) {
     this.activeIndex = event;
+  }
+
+  nextStep(){
+    this.activeIndex = this.activeIndex + 1;
+  }
+
+  previousStep(){
+    this.activeIndex = this.activeIndex - 1;
+  }
+
+  cancelCreate(){
+    this.onCancel.emit();
   }
 
 }

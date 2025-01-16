@@ -21,6 +21,8 @@ import { MessagesModule } from 'primeng/messages';
 import { CalendarModule } from 'primeng/calendar';
 import { SectionStepComponent } from "./components/section-step/section-step.component";
 import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
     imports: [
@@ -42,7 +44,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
         FontAwesomeModule,
         MessagesModule,
         CalendarModule,
-        InputNumberModule
+        InputNumberModule,
+        RadioButtonModule,
+        DataViewModule
     ],
     declarations: [
         MainSectionComponent,
@@ -71,7 +75,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
         FontAwesomeModule,
         MessagesModule,
         CalendarModule,
-        InputNumberModule
+        InputNumberModule,
+        RadioButtonModule,
+        DataViewModule
     ],
     providers:[ConfirmationService]
   })

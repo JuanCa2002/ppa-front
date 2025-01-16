@@ -2,7 +2,8 @@
 @import "primeicons/primeicons.css";
 
 :host ::ng-deep .button-filter .p-button{
-    width: 150px;
+    padding: 1rem;
+    width: 100%;
 }
 
 :host ::ng-deep .clear-button .p-button.p-button-secondary, .p-button-group.p-button-secondary > .p-button, .p-splitbutton.p-button-secondary > .p-button{
@@ -151,6 +152,10 @@
 
 :host ::ng-deep .p-component{
     font-family: 'Berkslund', Arial, sans-serif !important;
+}
+
+:host ::ng-deep .p-inputnumber.p-component{
+    width: 100%;
 }
 
 body {

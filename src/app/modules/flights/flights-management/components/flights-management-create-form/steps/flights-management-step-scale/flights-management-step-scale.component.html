@@ -1,0 +1,210 @@
+<app-section-step [title]="'Scales'" [sectionWithNumeral]="false">
+    <div class="flex align-items-center justify-content-between">
+        <p>Will this flight have scales in other airports?</p>
+        <form [formGroup]="formHasScales">
+            <div class="flex flex-wrap gap-4">
+                <div class="flex items-center">
+                    <input 
+                        formControlName="hasScales" 
+                        name="hasScales" 
+                        value="Yes"
+                        type="radio" 
+                        inputId="has_scales"/>
+                    <label for="has_scales" class="ml-2">Yes</label>
+                </div>
+          
+                <div class="flex items-center">
+                    <input 
+                        formControlName="hasScales" 
+                        name="hasScales" 
+                        value="No"
+                        type="radio"  
+                        inputId="has_no_scales"/>
+                    <label for="has_no_scales" class="ml-2">No</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <section *ngIf="this.formHasScales.get('hasScales')?.value === 'Yes'">
+        <div class="card flex justify-content-end mt-4 mb-3">
+            <p-button label="Add Scale" [raised]="true" icon="pi pi-plus" (onClick)="showModalNew = true; this.scaleForm.reset();"/>
+        </div>    
+        <form [formGroup]="formScales">
+            <p-divider />
+            <h2 class="text-center">Scales Flight</h2>
+            <p class="font-bold font-italic text-center">The order of the scales will be the same as the order in which they were added.</p>
+            <p-dataView class="mt-7" *ngIf="scales.length > 0" formArrayName="scales" [value]="scales.value" layout="list">
+              <ng-template let-scale pTemplate="list">
+                <div class="grid grid-cols-12 grid-nogutter">
+                  <div *ngFor="let scale of scales.controls; let index = index; let first = first" [formGroupName]="index" class="col-span-12">
+                        <div class="numeral border-circle w-2rem h-2rem flex align-items-center justify-content-center font-bold">
+                            <span>{{index + 1}}</span>
+                        </div>
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-center p-1"
+                            [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }"
+                            >
+                            <div class="md:w-40 relative">
+                                <img
+                                    class="block xl:block mx-auto rounded-border w-full"
+                                    height="80px"
+                                    [src]="'../../../../../../../../assets/img/plane.png'"
+                                    [alt]="'scale destiny'"
+                                />
+                            </div>
+                            <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-4">
+                                <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                                    <div>
+                                        <span class="font-medium text-secondary text-sm">{{scale.get('departmentScaleName')?.value + ' - ' + scale.get('scaleMunicipalityName')?.value }}</span>
+                                        <div class="wrap-text text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{scale.get('scalePlaceName')?.value}}</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                                    <div>
+                                        <span class="font-medium text-secondary text-sm">Estimated Time Scale: </span>
+                                        <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{scale.get('estimatedTimeScale')?.value + ' ' + scale.get('unitTime')?.value}}</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                                    <div>
+                                        <span class="font-medium text-secondary text-sm">Arrival Time Scale: </span>
+                                        <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{scale.get('arrivalTimeScale')?.value}}</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row-reverse md:flex-row gap-2">
+                                    <p-button icon="pi pi-trash" severity="danger" (onClick)="removeScale(index)"/>
+                                    <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="editingScale(index)"/>
+                                </div>
+                            </div>
+                            <p-divider layout="vertical" />  
+                        </div>
+                    </div>
+                </div>
+              </ng-template>
+            </p-dataView>
+          </form>
+          <div class="card" *ngIf="scales.length === 0 && this.formHasScales.get('hasScales')?.value === 'Yes'">
+            <p-messages [(value)]="messages" [closable]="false" />
+          </div> 
+          <div class="card flex justify-content-end mt-4 mb-3">
+            <p>This flight will have: <span class="font-bold text-blue-600">{{scales.length}}</span>  Scales</p>
+          </div>
+    </section>
+</app-section-step>
+
+<p-divider />
+
+<div class="card flex justify-content-center mt-4 gap-4 button-filter">
+    <p-button label="Previous" icon="pi pi-angle-left" (onClick)="onPreviousStep.emit()"/>
+    <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancelCreate()"/>
+    <p-button label="Next" 
+              icon="pi pi-angle-right"
+              [disabled]="scales.length === 0 && this.formHasScales.get('hasScales')?.value === 'Yes'"
+              (onClick)="nextStep()"/>
+</div>
+
+<p-dialog
+    header="{{!isUpdate ? 'New Scale': 'Update Scale'}}" 
+    [modal]="true"
+    [draggable]="false" 
+    [(visible)]="showModalNew" 
+    [style]="{ width: '50rem' }">
+    <span class="p-text-secondary block mb-5 mt-4">{{!isUpdate ? 'Create Scale': 'Edit Scale'}}</span>
+    <form [formGroup]="scaleForm" class="grid">
+        <div class="flex flex-column col-6 gap-2">
+            <label for="save_department_scale_flight" class="font-bold">Scale Department <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="departmentsScale"
+                id="save_department_scale_flight"
+                name="save_department_scale_flight"
+                formControlName="departmentScaleId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                appendTo="body"
+                (onClear)="places = []; this.scaleForm.get('scaleMunicipalityId')?.setValue(undefined); airports = []; this.scaleForm.get('scalePlaceId')?.setValue(undefined)"
+                (onChange)="getLocations($event)"
+                (onFilter)="getDepartments($event)" 
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column col-6 gap-2 col">
+            <label for="save_scale_located_flight" class="font-bold">Scale (Municipality)  <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="places"
+                id="save_scale_located_flight"
+                name="save_scale_located_flight"
+                formControlName="scaleMunicipalityId"
+                (onClear)="airports = []; this.scaleForm.get('scalePlaceId')?.setValue(undefined)"
+                (onChange)="getAirports($event)" 
+                optionLabel="name"
+                filter="true"
+                appendTo="body"
+                filterBy="name"
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column gap-2 col">
+            <label for="save_scale_airport_flight" class="font-bold">Airport Scale <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="airports"
+                id="save_scale_airport_flight"
+                name="save_scale_airport_flight"
+                formControlName="scalePlaceId" 
+                optionLabel="name"
+                filter="true"
+                filterBy="name"
+                optionValue="id" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column col-6 gap-2">
+            <label for="save_estimated_time_scale_flight" class="font-bold">Estimated Time Scale <span class="required">*</span></label>
+            <p-inputNumber 
+                formControlName="estimatedTimeScale"
+                inputId="save_estimated_time_scale_flight"
+                appendTo="body"
+                [min]="0"
+                [max]="100" 
+                name="save_estimated_time_scale_flight"/> 
+        </div>
+        <div class="flex flex-column col-6 gap-2">
+            <label for="save_unite_estimated_time_scale_flight" class="font-bold">Unit Estimated Time Scale <span class="required">*</span></label>
+            <p-dropdown 
+                [options]="unitsTime"
+                id="save_unite_estimated_time_scale_flight"
+                name="save_unite_estimated_time_scale_flight"
+                formControlName="unitTime" 
+                optionLabel="label"
+                appendTo="body" 
+                optionValue="value" 
+                placeholder="Select"
+                showClear="true"/>
+        </div>
+        <div class="flex flex-column col-6 gap-2">
+            <label for="save_arrival_time_scale_flight" class="font-bold">Arrival Time  Scale <span class="required">*</span></label>
+            <p-calendar 
+                formControlName="arrivalTimeWF" 
+                [showIcon]="true"
+                [iconDisplay]="'input'"
+                appendTo="body"  
+                [timeOnly]="true" 
+                inputId="save_arrival_time_scale_flight">
+                    <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                        <i 
+                            class="pi pi-clock pointer-events-none pointer-events-none" 
+                            (click)="clickCallBack($event)"></i>
+                    </ng-template>
+            </p-calendar>
+        </div>
+    </form>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="cancelAddScale()"/>
+        <p-button label="{{!isUpdate ? 'Save': 'Update'}}" [disabled]="scaleForm.invalid" (onClick)="isUpdate ? updateScale(): addScale() "/>
+    </div>
+</p-dialog>
+
+<p-toast position="bottom-center" />
+<p-confirmDialog />

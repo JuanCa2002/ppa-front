@@ -2,8 +2,8 @@
     <div class="card flex justify-content-end mt-4 mb-3">
         <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="createNewRegister()"/>
     </div>
-    <form [formGroup]="formFilterFlights" class="filters">
-        <div class="flex flex-column gap-2">
+    <form [formGroup]="formFilterFlights" class="grid">
+        <div class="flex flex-column col-3 gap-2">
             <label for="department_origin_flight" class="font-bold">Department Origin  <span class="required">*</span></label>
             <p-dropdown 
                 [options]="departmentsOrigins"
@@ -20,7 +20,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-3 gap-2">
             <label for="origin_flight" class="font-bold">Origin (Municipality)  <span class="required">*</span></label>
             <p-dropdown 
                 [options]="origins"
@@ -34,7 +34,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-3 gap-2">
             <label for="department_destiny_flight" class="font-bold">Department Destiny <span class="required">*</span></label>
             <p-dropdown 
                 [options]="departmentsDestinations"
@@ -51,7 +51,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-3 gap-2">
             <label for="destiny_flight" class="font-bold">Destiny (Municipality)  <span class="required">*</span></label>
             <p-dropdown 
                 [options]="destinations"
@@ -65,7 +65,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('airlineId')?.value">
+        <div class="flex flex-column col-3 gap-2" *ngIf="formAddFilters.get('airlineId')?.value">
             <label for="airline_flight" class="font-bold">Airline</label>
             <p-dropdown 
                 [options]="airlines"
@@ -80,7 +80,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('exitDate')?.value">
+        <div class="flex flex-column col-3 gap-2" *ngIf="formAddFilters.get('exitDate')?.value">
             <label for="exit_date_flight" class="font-bold">Exit Date</label>
             <p-calendar 
                 formControlName="exitDate" 
@@ -90,7 +90,7 @@
                 inputId="exit_date_flight" 
                 [showOnFocus]="true" />
         </div>
-        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('exitTime')?.value">
+        <div class="flex flex-column col-3 gap-2" *ngIf="formAddFilters.get('exitTime')?.value">
             <label for="exit_time_flight" class="font-bold">Exit Time</label>
             <p-calendar 
                 formControlName="exitTime" 
@@ -105,7 +105,7 @@
                     </ng-template>
             </p-calendar>
         </div>
-        <div class="flex flex-column gap-2" *ngIf="formAddFilters.get('state')?.value">
+        <div class="flex flex-column col-3 gap-2" *ngIf="formAddFilters.get('state')?.value">
             <label for="state_flight" class="font-bold">State</label>
             <p-dropdown 
                 [options]="states"

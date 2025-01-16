@@ -2,19 +2,35 @@
     <p-steps 
         [model]="items" 
         [readonly]="false" 
-        [activeIndex]="activeIndex" 
-        (activeIndexChange)="onActiveIndexChange($event)">
+        [activeIndex]="activeIndex">
     </p-steps>
     <div class="step-content">
         <ng-container [ngSwitch]="activeIndex">
             <div *ngSwitchCase="0">
-                <app-flights-management-step-basic-info></app-flights-management-step-basic-info>
+                <app-flights-management-step-basic-info 
+                    (onNextStep)="nextStep()"
+                    (onCancel)="cancelCreate()">
+                </app-flights-management-step-basic-info>
             </div>
             <div *ngSwitchCase="1">
-                <!--TODO: Create Step Number 2 Itinerary-->
+                <app-flights-management-step-itinerary 
+                    (onNextStep)="nextStep()" 
+                    (onPreviousStep)="previousStep()"
+                    (onCancel)="cancelCreate()">
+                </app-flights-management-step-itinerary>
             </div>
             <div *ngSwitchCase="2">
-               <!--TODO: Create Step Number 3 Scales-->
+                <app-flights-management-step-scale 
+                    (onNextStep)="nextStep()" 
+                    (onPreviousStep)="previousStep()"
+                    (onCancel)="cancelCreate()">
+                </app-flights-management-step-scale>
+            </div>
+            <div *ngSwitchCase="3">
+                <app-flights-management-step-confirmation
+                    (onPreviousStep)="previousStep()"
+                    (onCancel)="cancelCreate()">
+                </app-flights-management-step-confirmation>
             </div>
         </ng-container>
     </div>

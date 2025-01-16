@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class SectionStepComponent {
   @Input() public numeral: number = 1;
+  @Input() public sectionWithNumeral: boolean = true;
   @Input() public title: string = "Title";
 
 }

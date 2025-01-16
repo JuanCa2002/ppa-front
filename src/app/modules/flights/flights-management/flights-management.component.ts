@@ -30,5 +30,11 @@ export class FlightsManagementComponent implements OnInit{
     this.title = 'Create New Flight';
   }
 
+  public backToFilter(){
+    this.items?.pop();
+    this.stateComponent = 'FILTER';
+    this.title = 'Flights';
+  }
+
 
 }

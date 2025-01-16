@@ -1,0 +1,110 @@
+<app-section-step [title]="'Basic Information'" [numeral]="1">
+   <div class="grid p-3">
+        <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
+            <h2 class="font-bold text-blue-600 text-xl">Origin</h2>
+            <span>{{originAirport.departmentName + ' - ' + originAirport.locationName }}</span>
+            <span>{{originAirport.name}}</span>
+        </div>
+        <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
+            <h2 class="font-bold text-blue-600 text-xl">Destiny</h2>
+            <span>{{destinyAirport.departmentName + ' - ' + destinyAirport.locationName }}</span>
+            <span>{{destinyAirport.name}}</span>
+        </div>
+        <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
+            <h2 class="font-bold text-blue-600 text-xl">Aiplane</h2>
+            <span>{{airplaneFlight.airline!.name}}</span>
+            <span>{{airplaneFlight.branch + ' - ' + airplaneFlight.model }}</span>
+        </div>
+        <div class="flex flex-column gap-3 col-3">
+            <h2 class="font-bold text-blue-600 text-xl">Price</h2>
+            <span>{{cacheFlight.price | currency:'USD'}}</span>
+        </div>
+   </div>
+</app-section-step>
+
+<app-section-step [title]="'Itinerary'" [numeral]="2">
+    <div class="grid p-3">
+        <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
+            <h2 class="font-bold text-blue-600 text-xl">Estimated Time Travel</h2>
+            <span>{{cacheFlight.itinerary?.estimatedTime + ' ' + cacheFlight.itinerary?.unitTime }}</span>
+        </div>
+        <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
+            <h2 class="font-bold text-blue-600 text-xl">Exit Date</h2>
+            <span>{{cacheFlight.itinerary?.exitDate | date: 'yyyy-MM-dd' }}</span>
+        </div>
+        <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
+            <h2 class="font-bold text-blue-600 text-xl">Exit Time</h2>
+            <span>{{cacheFlight.itinerary?.exitTime | date: 'HH:mm' }}</span>
+        </div>
+        <div class="flex flex-column gap-3 col-3">
+            <h2 class="font-bold text-blue-600 text-xl">Arrival Date</h2>
+            <span>{{cacheFlight.itinerary?.arrivalDate | date: 'yyyy-MM-dd' }}</span>
+        </div>
+        <div class="flex flex-column gap-3 col-3">
+            <h2 class="font-bold text-blue-600 text-xl">Arrival Time</h2>
+            <span>{{cacheFlight.itinerary?.arrivalTime | date: 'HH:mm' }}</span>
+        </div>
+    </div> 
+</app-section-step>
+
+<app-section-step [title]="'Scales'" [numeral]="3">
+    <p-dataView class="mt-7" *ngIf="cacheFlight.scales!.length > 0" [value]="cacheFlight.scales" layout="list">
+        <ng-template let-scale pTemplate="list">
+          <div class="grid grid-cols-12 grid-nogutter">
+            <div *ngFor="let scale of cacheFlight.scales let index = index; let first = first" class="col-span-12">
+                  <div class="numeral border-circle w-2rem h-2rem flex align-items-center justify-content-center font-bold">
+                      <span>{{index + 1}}</span>
+                  </div>
+                  <div
+                      class="flex flex-col sm:flex-row sm:items-center p-1"
+                      [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }"
+                      >
+                      <div class="md:w-40 relative">
+                          <img
+                              class="block xl:block mx-auto rounded-border w-full"
+                              height="80px"
+                              [src]="'../../../../../../../../assets/img/plane.png'"
+                              [alt]="'scale destiny'"
+                          />
+                      </div>
+                      <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-4">
+                          <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                              <div>
+                                  <span class="font-medium text-secondary text-sm">{{scale.departmentScaleName + ' - ' + scale.scaleMunicipalityName }}</span>
+                                  <div class="wrap-text text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{scale.scalePlaceName}}</div>
+                              </div>
+                          </div>
+                          <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                              <div>
+                                  <span class="font-medium text-secondary text-sm">Estimated Time Scale: </span>
+                                  <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{scale.estimatedTimeScale + ' ' + scale.unitTime}}</div>
+                              </div>
+                          </div>
+                          <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                              <div>
+                                  <span class="font-medium text-secondary text-sm">Arrival Time Scale: </span>
+                                  <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{scale.arrivalTimeScale}}</div>
+                              </div>
+                          </div>
+                      </div>
+                      <p-divider layout="vertical" />  
+                  </div>
+              </div>
+          </div>
+        </ng-template>
+    </p-dataView>
+    <div class="card" *ngIf="cacheFlight.scales!.length === 0">
+        <p-messages [(value)]="messages" [closable]="false" />
+    </div> 
+</app-section-step>
+
+<p-divider />
+
+<div class="card flex justify-content-center mt-4 gap-4 button-filter">
+    <p-button label="Previous" icon="pi pi-angle-left" (onClick)="onPreviousStep.emit()"/>
+    <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancelCreate()"/>
+    <p-button label="Confirm" icon="pi pi-verified" (onClick)="confirmCreate()"/>
+</div>
+
+<p-toast position="bottom-center" />
+<p-confirmDialog />
