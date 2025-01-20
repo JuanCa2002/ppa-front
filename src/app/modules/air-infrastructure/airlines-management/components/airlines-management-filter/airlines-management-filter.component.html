@@ -2,8 +2,8 @@
     <div class="card flex justify-content-end mt-4 mb-3">
         <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="createNewAirline()"/>
     </div>
-    <form [formGroup]="formFilterAirline" class="filters">
-        <div class="flex flex-column gap-2">
+    <form [formGroup]="formFilterAirline" class="grid">
+        <div class="flex flex-column col-6 gap-2">
             <label for="name_airline" class="font-bold">Name</label>
             <input 
                 pInputText 
@@ -11,7 +11,7 @@
                 name="name_airline"
                 formControlName="name" />
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-6 gap-2">
             <label for="state_airline" class="font-bold">State</label>
             <p-dropdown 
                 [options]="states"

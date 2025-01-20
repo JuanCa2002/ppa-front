@@ -2,8 +2,8 @@
     <div class="card flex justify-content-end mt-4 mb-3">
         <p-button label="New Register" [raised]="true" icon="pi pi-plus"  (onClick)="createNewRecord()"/>
     </div>
-    <form [formGroup]="formFiltersAirplane" class="filters">
-        <div class="flex flex-column gap-2">
+    <form [formGroup]="formFiltersAirplane" class="grid">
+        <div class="flex flex-column col-3 gap-2">
             <label for="branch_airplane" class="font-bold">Branch</label>
             <input 
                 pInputText 
@@ -11,7 +11,7 @@
                 name="branch_airplane"
                 formControlName="branch" />
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-3 gap-2">
             <label for="state_airplane" class="font-bold">State</label>
             <p-dropdown 
                 [options]="states"
@@ -23,7 +23,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-3 gap-2">
             <label for="model_airplane" class="font-bold">Model</label>
             <p-calendar
                 id="model_airplane"
@@ -34,7 +34,7 @@
                 showClear="true" 
                 placeholder="Select model (year)"/>
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-3 gap-2">
             <label for="airline_airplane" class="font-bold">Airline  <span class="required">*</span></label>
             <p-dropdown 
                 [options]="airlines"

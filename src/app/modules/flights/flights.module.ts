@@ -8,7 +8,12 @@ import { FlightsRouterConstants } from "../../constants/routers/flights/flights-
         {
             path: FlightsRouterConstants.FLIGHTS_ROUTER,
             loadChildren: () => import("./flights-management/flights-management.module").then((m) => m.FlightsManagementModule)
-          }
+        },
+        {
+            path: "",
+            redirectTo: FlightsRouterConstants.FLIGHTS_ROUTER,
+            pathMatch: "full"
+        }
       ])
     ]
   })

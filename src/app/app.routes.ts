@@ -15,8 +15,12 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/flights/flights.module').then(m => m.FlightsModule)
     },
     {
+        path: RouterConstants.HOME_ROUTER,
+        loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
+    },
+    {
         path: "",
-        redirectTo: RouterConstants.LOCATIONS_ROUTER,
+        redirectTo: RouterConstants.HOME_ROUTER,
         pathMatch: "full"
     }
 ];

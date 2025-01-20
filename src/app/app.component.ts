@@ -18,8 +18,17 @@ export class AppComponent {
 
     constructor(private router: Router, private loadingService: LoadingService){}
 
+    public backMainPage(){
+        this.router.navigate(['/'+RouterConstants.HOME_ROUTER]);
+    }
+
     ngOnInit() {
         this.items = [
+            {
+                label: 'Home',
+                icon: 'pi pi-home',
+                command: (click) => {this.backMainPage();}
+            },
             {
                 label: 'Locations',
                 icon: 'pi pi-map-marker',

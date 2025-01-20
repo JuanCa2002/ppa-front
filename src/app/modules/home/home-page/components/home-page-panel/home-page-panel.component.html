@@ -1,0 +1,22 @@
+<div *ngIf="isSubItems" class="card flex justify-content-end p-5">
+    <p-button label="Go Back" 
+              [raised]="true" 
+              severity="secondary" 
+              class="clear-button" 
+              icon="pi pi-chevron-circle-left"
+              (onClick)="ngOnInit();"/>
+</div>
+<section id="panel" class="w-full overflow-x-hidden">
+    <div class="grid justify-content-center align-items-center">
+        <div class="col-4 p-4 cursor-pointer" *ngFor="let item of items" (click)="onItemClick(item)">
+            <li 
+                [ngClass]="item.icon"
+                class="text-bluegray-50 hover:bg-cyan-600 hover:text-bluegray-50 hover:shadow-8 w-full h-20rem p-5 flex flex-column justify-content-center align-items-center text-6xl bg-cyan-200 border-round"
+                style="box-sizing: border-box;">
+                <span class="text-center text-4xl md:text-3xl sm:text-2xl lg:text-5xl xl:text-6xl break-word">
+                    {{item.name}}
+                </span>
+            </li>
+        </div>
+    </div>
+</section>

@@ -7,8 +7,8 @@
                   icon="pi pi-chevron-circle-left"
                   (onClick)="openConfirmReturn()"/>
     </div>
-    <form [formGroup]="formSaveAirport" class="form-save mb-6">
-        <div class="flex flex-column gap-2">
+    <form [formGroup]="formSaveAirport" class="grid mb-6">
+        <div class="flex flex-column col-3 gap-2">
             <label for="name_airport_save" class="font-bold">Name <span class="required">*</span></label>
             <input 
                 pInputText 
@@ -16,7 +16,7 @@
                 name="name_airport_save"
                 formControlName="name" />
         </div>
-        <div class="flex flex-column gap-2" *ngIf="!isUpdate">
+        <div class="flex flex-column col-3 gap-2" *ngIf="!isUpdate">
             <label for="department_airport_save" class="font-bold">Department <span class="required">*</span></label>
             <p-dropdown 
                 [options]="departments"
@@ -33,7 +33,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2" *ngIf="!isUpdate">
+        <div class="flex flex-column col-3 gap-2" *ngIf="!isUpdate">
             <label for="location_airport_save" class="font-bold">Location (Municipality) <span class="required">*</span></label>
             <p-dropdown 
                 [options]="locations"
@@ -47,7 +47,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2" *ngIf="!isUpdate">
+        <div class="flex flex-column col-3 gap-2" *ngIf="!isUpdate">
             <label for="address_airport_save" class="font-bold">Address <span class="required">*</span></label>
             <input 
                 pInputText 
@@ -55,7 +55,7 @@
                 name="address_airport_save"
                 formControlName="address" />
         </div>
-        <div class="flex flex-column gap-2" *ngIf="isUpdate">
+        <div class="flex flex-column col-3 gap-2" *ngIf="isUpdate">
             <label for="state_airport_save" class="font-bold">State <span class="required">*</span></label>
             <p-dropdown 
                 [options]="states"

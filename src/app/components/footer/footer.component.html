@@ -1,0 +1,60 @@
+<div class="footer mt-5 grid w-full h-full">
+    <div class="col-4 flex flex-column justify-content-center align-items-center">
+        <img 
+            src="../../../../../../assets/img/ppa-air-logo.png" 
+            alt="ppa-air-logo"
+            width="120"
+            height="80"
+            (click)="onItemClick('/')"
+            class="border-round cursor-pointer shadow-2 transition-duration-300 hover:shadow-4 p-2 bg-white"
+        />
+        <p class="text-semibold text-bluegray-50 font-italic">Flight Beyond</p>
+    </div>
+    <div class="col-4 flex flex-column justify-content-center align-items-center">
+       <h3 class="font-bold text-center text-bluegray-50">Sections</h3>
+       <p class="text-center text-bluegray-50 text-sm cursor-pointer no-underline hover:underline" (click)="onItemClick('/')">Home</p>
+       <p class="text-center text-bluegray-50 text-sm cursor-pointer no-underline hover:underline" (click)="onItemClick('/locations')">Locations</p>
+       <p class="text-center text-bluegray-50 text-sm cursor-pointer no-underline hover:underline" (click)="onItemClick('/air-infrastructure')">Air Infrastructure</p>
+       <p class="text-center text-bluegray-50 text-sm cursor-pointer no-underline hover:underline" (click)="onItemClick('/flights')">Flights</p>
+    </div> 
+    <div class="col-4 flex flex-column justify-content-center align-items-center">
+        <h3 class="font-bold text-center text-bluegray-50">About this page</h3>
+        <a href="https://www.linkedin.com/in/juan-camilo-torres-beltr%C3%A1n-5a7539224/" target="_blank"><p class="text-center text-bluegray-50 text-sm cursor-pointer no-underline hover:underline">Juan Camilo Torres B (Software Engineer)</p></a>
+        <a href="https://github.com/JuanCa2002/ppa-front" target="_blank"><p class="text-center text-bluegray-50 text-sm cursor-pointer no-underline hover:underline">Angular and Primeng (FRONT SECTION) </p></a>
+        <a href="https://github.com/JuanCa2002/ppa" target="_blank"><p class="text-center text-bluegray-50 text-sm cursor-pointer no-underline hover:underline">Java and Spring Boot (BACK SECTION)</p></a>
+        <p class="text-center text-bluegray-50 text-sm">PostgreSQL (BD)</p>
+    </div>
+    <div class="col-4 flex flex-column justify-content-center align-items-center">
+        <h3 class="font-bold text-center text-bluegray-50">Contact the author</h3>
+        <div class="flex flex-row justify-content-center align-items-center text-bluegray-50 gap-4">
+            <a href="https://www.linkedin.com/in/juan-camilo-torres-beltr%C3%A1n-5a7539224/" target="_blank" class="pi pi-linkedin text-bluegray-50 cursor-pointer"></a>
+            <a href="https://github.com/JuanCa2002" target="_blank" class="pi pi pi-github text-bluegray-50 cursor-pointer"></a>
+            <a href="mailto:camilotorresb104@gmail.com" target="_blank" class="pi pi pi-at text-bluegray-50 cursor-pointer"></a>
+        </div>
+    </div>
+</div>
+<div class="copyright-section w-full h-full">
+    <div class="flex flex-column justify-content-center align-items-center">
+        <p class="font-bold">All rights reserved</p>
+        <a href="https://www.linkedin.com/in/juan-camilo-torres-beltr%C3%A1n-5a7539224/" target="_blank" class="text-bluegray-900"><p class="text-sm cursor-pointer no-underline hover:underline">Juan Camilo Torres Beltrán 2025</p></a>
+    </div>
+</div>
+
+<div class="fixed bottom-0 left-0 p-4" *ngIf="showButtons">
+    <a 
+        href="https://w.app/MQhkaC" 
+        target="_blank" 
+        class="p-button p-button-rounded p-button-success shadow-3 transition-duration-300 hover:shadow-5 flex justify-content-center align-items-center"
+        style="width: 50px; height: 50px;">
+        <i class="pi pi-whatsapp text-2xl"></i>
+    </a>
+</div>
+
+<div class="fixed bottom-0 right-0 p-4" *ngIf="showButtons">
+    <button 
+        class="p-button p-button-rounded p-button-primary shadow-3 transition-duration-300 hover:shadow-5 flex justify-content-center align-items-center"
+        style="width: 50px; height: 50px;" 
+        (click)="scrollToTop()">
+        <i class="pi pi-arrow-up text-2xl"></i>
+    </button>
+</div>
