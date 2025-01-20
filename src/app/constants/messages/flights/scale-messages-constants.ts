@@ -5,4 +5,6 @@ export class ScaleMessagesConstants {
     public static readonly SUCCESS_EDITING_SCALE = 'The scale was succesfully updated';
 
     public static readonly SCALE_SAME_AS_ORIGIN_OR_DESTINY_ERROR_MESSAGE = 'The scale is the same as the origin or destiny selected for this flight';
+
+    public static readonly INVALID_SCALES_QUANTITY = 'A maximum of 5 scales is allowed per flight';
 }

@@ -32,7 +32,6 @@
                     [yearNavigator]="true"
                     [monthNavigator]="true"
                     [iconDisplay]="'input'"
-                    [minDate]="currentDate"  
                     inputId="save_exit_date_flight">
                 </p-calendar>
             </div>
@@ -60,7 +59,6 @@
                     [showIcon]="true"
                     [iconDisplay]="'input'"
                     [yearNavigator]="true"
-                    [minDate]="currentDate"  
                     [monthNavigator]="true"  
                     inputId="save_arrival_date_flight">
                 </p-calendar>
@@ -92,4 +90,6 @@
     <p-button label="Next" icon="pi pi-angle-right" [disabled]="!formItineraryData.valid" (onClick)="nextStep()"/>
 </div>
 
+
+<p-toast position="bottom-center" />
 <p-confirmDialog />

@@ -16,5 +16,13 @@ export class ScaleApiService {
       return this.httpClient.post<ScaleDTO[]>(ScaleApiConstants.URL_SCALE, scales);
     }
 
+    public deleteScale(id: number): Observable<void>{
+      return this.httpClient.delete<void>(`${ScaleApiConstants.URL_SCALE}/${id}`);
+    }
+
+    public getScalesByItineraryId(itineraryId: number): Observable<ScaleDTO[]>{
+      return this.httpClient.get<ScaleDTO[]>(`${ScaleApiConstants.URL_SCALE}/itinerary/${itineraryId}`); 
+    }
+
     
 }

@@ -69,6 +69,7 @@ export class FlightsManagementStepScaleComponent implements OnInit{
     });
     this.scaleForm = this.fb.group({
       id: [null],
+      index: [null],
       departmentScaleId: [null, Validators.required],
       departmentScaleName: [null],
       scaleMunicipalityId: [null, Validators.required],
@@ -84,24 +85,29 @@ export class FlightsManagementStepScaleComponent implements OnInit{
   }
 
   public populateFormArrayFromDto(scales: ScaleDTO[] | null): void {
-    if(scales!= null && scales.length > 0){
+    if (scales != null && scales.length > 0) {
+      let cont = 0;
       const formArray = this.fb.array(
-        scales.map(scale => this.fb.group({
-          id: [scale.id],
-          scalePlaceId: [scale.scalePlaceId],
-          scalePlaceName: [scale.scalePlaceName],
-          departmentScaleId: [scale.departmentScaleId],
-          departmentScaleName: [scale.departmentScaleName],
-          scaleMunicipalityId: [scale.scaleMunicipalityId],
-          scaleMunicipalityName: [scale.scaleMunicipalityName],
-          arrivalTimeScale: [scale.arrivalTimeScale],
-          estimatedTimeScale: [scale.estimatedTimeScale],
-          unitTime: [scale.unitTime],
-          arrivalTimeWF: [scale.arrivalTimeWF],
-          itineraryId: [scale.itineraryId]
-        }))
+        scales.map(scale => {
+          const formGroup = this.fb.group({
+            id: [scale.id],
+            index: [cont],
+            scalePlaceId: [scale.scalePlaceId],
+            scalePlaceName: [scale.scalePlaceName],
+            departmentScaleId: [scale.departmentScaleId],
+            departmentScaleName: [scale.departmentScaleName],
+            scaleMunicipalityId: [scale.scaleMunicipalityId],
+            scaleMunicipalityName: [scale.scaleMunicipalityName],
+            arrivalTimeScale: [scale.arrivalTimeScale],
+            estimatedTimeScale: [scale.estimatedTimeScale],
+            unitTime: [scale.unitTime],
+            arrivalTimeWF: [scale.arrivalTimeWF],
+            itineraryId: [scale.itineraryId]
+          });
+          cont++;
+          return formGroup;
+        })
       );
-    
       this.formScales.setControl('scales', formArray);
     }
   }
@@ -112,6 +118,10 @@ export class FlightsManagementStepScaleComponent implements OnInit{
 
   private validateScaleSameLocations(){
     return this.validateScaleSameAsDestiny() || this.validateScaleSameAsOrigin();
+  }
+
+  private validateMoreThanFiveScales(){
+    return this.scales.length === 5;
   }
 
   private validateScaleSameAsDestiny(){
@@ -131,6 +141,10 @@ export class FlightsManagementStepScaleComponent implements OnInit{
       this.messages = [{severity: 'error', summary: 'Error', detail: ScaleMessagesConstants.SCALE_SAME_AS_ORIGIN_OR_DESTINY_ERROR_MESSAGE}];
       return;
     }
+    if(this.validateMoreThanFiveScales()){
+      this.messages = [{severity: 'error', summary: 'Error', detail: ScaleMessagesConstants.INVALID_SCALES_QUANTITY}];
+      return;
+    }
     const message = GeneralMessagesConstants.ADD_NEW_SCALE_MESSAGE;
     const header =  GeneralMessagesConstants.ADD_SCALE_MESSAGE;
     this.confirmationService.confirm({
@@ -147,7 +161,7 @@ export class FlightsManagementStepScaleComponent implements OnInit{
           this.scaleForm.get('departmentScaleName')?.setValue(department.name);
           this.scaleForm.get('scaleMunicipalityName')?.setValue(place.name);
           this.scaleForm.get('scalePlaceName')?.setValue(airport.name);
-          this.scaleForm.get('id')?.setValue(this.scales.length);
+          this.scaleForm.get('index')?.setValue(this.scales.length);
           this.scaleForm.get('arrivalTimeScale')?.setValue(this.datePipe.transform(this.scaleForm.get('arrivalTimeWF')?.value, 'HH:mm') + ':00');
           this.scales.push(this.fb.group({...this.scaleForm.value}));
           this.scaleForm.reset();
@@ -158,7 +172,7 @@ export class FlightsManagementStepScaleComponent implements OnInit{
   }
 
   public editingScale(index: number){
-    const scaleToUpdate = this.scales.controls.find(s => s.get('id')?.value === index);
+    const scaleToUpdate = this.scales.controls.find(s => s.get('index')?.value === index);
     this.getLocations({value: scaleToUpdate?.get('departmentScaleId')?.value});
     this.getAirports({value: scaleToUpdate?.get('scaleMunicipalityId')?.value});
     this.scaleForm.patchValue(scaleToUpdate?.value);
@@ -202,7 +216,7 @@ export class FlightsManagementStepScaleComponent implements OnInit{
 
   private editScale() {
     let scaleToUpdate = this.scales.controls.find(
-      s => s.get('id')?.value === this.selectIndexRecord
+      s => s.get('index')?.value === this.selectIndexRecord
     );
   
     if (scaleToUpdate) {

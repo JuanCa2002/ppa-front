@@ -168,6 +168,9 @@ public changeValueForm(key: any, event: any){
   if(!event.checked){
     this.formFilterFlights.get(key)?.setValue(undefined);
   }
+  if(event.checked && key === 'isDirect'){
+    this.formFilterFlights.get(key)?.setValue(false);
+  }
 }
 
 }

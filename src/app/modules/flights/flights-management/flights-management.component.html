@@ -6,12 +6,17 @@
            (onSave)="save()"
            ></app-flights-management-filter>
            <p-divider type="solid" />
-           <app-flights-management-search-result #showResultsPanel></app-flights-management-search-result>
+           <app-flights-management-search-result #showResultsPanel (onShowDetail)="showDetail()" (onUpdate)="update()"></app-flights-management-search-result>
         </app-main-section>
     </ng-container>
     <ng-container *ngSwitchCase="'SAVE'">
         <app-main-section [title]="title" [items]="items" style="padding:5%;">
             <app-flights-management-create-form (onCancel)="backToFilter()"></app-flights-management-create-form>
+        </app-main-section>
+    </ng-container>
+    <ng-container *ngSwitchCase="'DETAIL'">
+        <app-main-section [title]="title" [items]="items" style="padding:5%;">
+            <app-flights-management-step-confirmation (onBack)="backToFilter()" [isShowInfo]="true"></app-flights-management-step-confirmation>
         </app-main-section>
     </ng-container>
 </div>

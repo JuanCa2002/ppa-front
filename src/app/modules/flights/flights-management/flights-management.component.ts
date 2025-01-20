@@ -36,5 +36,15 @@ export class FlightsManagementComponent implements OnInit{
     this.title = 'Flights';
   }
 
+  public showDetail(){
+    this.items?.push({label: 'Detail Flight'});
+    this.stateComponent = 'DETAIL';
+    this.title = 'Detail Flight';
+  }
 
+  public update(){
+    this.items?.push({label: 'Update Fight'});
+    this.stateComponent = 'SAVE';
+    this.title = 'Update Flight';
+  }
 }

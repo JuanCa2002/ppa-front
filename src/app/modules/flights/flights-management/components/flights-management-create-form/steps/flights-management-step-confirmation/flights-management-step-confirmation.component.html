@@ -1,3 +1,11 @@
+<div *ngIf="isShowInfo" class="card flex justify-content-end mt-4 mb-3">
+    <p-button label="Go Back" 
+              [raised]="true" 
+              severity="secondary" 
+              class="clear-button" 
+              icon="pi pi-chevron-circle-left"
+              (onClick)="openConfirmReturn()"/>
+</div>
 <app-section-step [title]="'Basic Information'" [numeral]="1">
    <div class="grid p-3">
         <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
@@ -34,7 +42,8 @@
         </div>
         <div class="flex flex-column gap-3 col-3 border-400 border-right-2">
             <h2 class="font-bold text-blue-600 text-xl">Exit Time</h2>
-            <span>{{cacheFlight.itinerary?.exitTime | date: 'HH:mm' }}</span>
+            <span *ngIf="!isShowInfo">{{cacheFlight.itinerary?.exitTime | date: 'HH:mm' }}</span>
+            <span *ngIf="isShowInfo">{{cacheFlight.itinerary?.exitTime }}</span>
         </div>
         <div class="flex flex-column gap-3 col-3">
             <h2 class="font-bold text-blue-600 text-xl">Arrival Date</h2>
@@ -42,7 +51,8 @@
         </div>
         <div class="flex flex-column gap-3 col-3">
             <h2 class="font-bold text-blue-600 text-xl">Arrival Time</h2>
-            <span>{{cacheFlight.itinerary?.arrivalTime | date: 'HH:mm' }}</span>
+            <span *ngIf="!isShowInfo">{{cacheFlight.itinerary?.arrivalTime | date: 'HH:mm' }}</span>
+            <span *ngIf="isShowInfo">{{cacheFlight.itinerary?.arrivalTime }}</span>
         </div>
     </div> 
 </app-section-step>
@@ -100,7 +110,7 @@
 
 <p-divider />
 
-<div class="card flex justify-content-center mt-4 gap-4 button-filter">
+<div *ngIf="!isShowInfo" class="card flex justify-content-center mt-4 gap-4 button-filter">
     <p-button label="Previous" icon="pi pi-angle-left" (onClick)="onPreviousStep.emit()"/>
     <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancelCreate()"/>
     <p-button label="Confirm" icon="pi pi-verified" (onClick)="confirmCreate()"/>

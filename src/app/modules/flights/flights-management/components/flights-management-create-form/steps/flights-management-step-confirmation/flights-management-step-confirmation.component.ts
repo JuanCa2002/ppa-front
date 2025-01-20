@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralMessagesConstants } from '../../../../../../../constants/messages/general-messages-constants';
 import { FlightDataService } from '../../../../services/flight-data.service';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
@@ -13,6 +13,8 @@ import { ScaleApiService } from '../../../../services/scale-api.service';
 import { FlightApiService } from '../../../../services/flight-api.service';
 import { FlightMessagesConstants } from '../../../../../../../constants/messages/flights/flight-messages-constants';
 import { DatePipe } from '@angular/common';
+import { catchError, concatMap, from, tap } from 'rxjs';
+import { ScaleDTO } from '../../../../../../../dtos/flights/flight-management/scale-dto';
 
 @Component({
   selector: 'app-flights-management-step-confirmation',
@@ -25,8 +27,11 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
     public originAirport!: AirportDTO;
     public destinyAirport!: AirportDTO;
     public airplaneFlight!: AirplaneDTO;
+    public updateFlag!: boolean;
     public messages: Message[] = [];
+    @Input() public isShowInfo: boolean = false;
     @Output() onCancel = new EventEmitter();
+    @Output() onBack = new EventEmitter();
     @Output() onPreviousStep = new EventEmitter();
 
     constructor(private flightDataService: FlightDataService, private confirmationService: ConfirmationService,
@@ -36,6 +41,7 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
     ){}
 
     ngOnInit(): void {
+      this.updateFlag = this.flightDataService.getFlag();
       this.cacheFlight = this.flightDataService.getCacheFligth()!;
       this.getAirportInformation(this.cacheFlight!.itinerary!.destinyId!, 'DESTINY');
       this.getAirportInformation(this.cacheFlight!.itinerary!.originId!, 'ORIGIN');
@@ -47,7 +53,7 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
       this.airportApiService.getAirportById(id).subscribe(data => {
         (type === 'DESTINY') ? this.destinyAirport = data : this.originAirport = data;
       }, error =>{
-        this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
       })
     }
 
@@ -55,7 +61,7 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
       this.airplaneApiService.getAirplaneById$(id).subscribe(data => {
         this.airplaneFlight = data;
       }, error =>{
-        this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
       })
     }
 
@@ -68,7 +74,21 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
       this.itineraryApiService.postItinerary(itinerary).subscribe(response => {
         (this.cacheFlight.scales!.length > 0 ) ? this.saveScales(response.id!): this.saveFlight(response.id!);
       }, error =>{
-        this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
+      })
+    }
+
+    private putItinerary(){
+      const previousScales: ScaleDTO[] = this.flightDataService.getPreviousScales();
+      const itinerary = {...this.cacheFlight.itinerary!};
+      itinerary.arrivalDate = this.datePipe.transform(itinerary.arrivalDate, 'yyyy-MM-dd')!;
+      itinerary.exitDate = this.datePipe.transform(itinerary.exitDate, 'yyyy-MM-dd')!;
+      itinerary.exitTime = this.datePipe.transform(itinerary.exitTime, 'HH:mm') + ':00';
+      itinerary.arrivalTime = this.datePipe.transform(itinerary.arrivalTime, 'HH:mm') + ':00';
+      this.itineraryApiService.putItinerary(itinerary).subscribe(response => {
+         (previousScales.length > 0) ? this.deleteAllScales(previousScales.map(s => s.id!),response.id!) : this.putFlight(response.id!);
+      }, error =>{
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
       })
     }
 
@@ -80,10 +100,35 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
         };
       });
       this.scaleApiService.postScales(requests).subscribe(() => {
-        this.saveFlight(itineraryId);
+        if(!this.updateFlag){
+          this.saveFlight(itineraryId);
+          return;
+        }
+        this.messageService.add({severity: 'success', summary: 'Success', detail: FlightMessagesConstants.FLIGHT_UPDATED_SUCCESS_MESSAGE});
+        this.flightDataService.removeData();
+        this.onCancel.emit();
       }, error =>{
-        this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
       })
+    }
+
+    private deleteAllScales(scaleIds: number[], itineraryId: number) {
+      from(scaleIds).pipe(
+        concatMap(id => 
+          this.scaleApiService.deleteScale(id).pipe(
+            catchError(error => {
+              throw error; 
+            })
+          )
+        )
+      ).subscribe({
+        next: () => {
+          this.putFlight(itineraryId);
+        },
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message});
+        }
+      });
     }
 
 
@@ -94,8 +139,38 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
         this.flightDataService.removeData();
         this.onCancel.emit();
       }, error =>{
-        this.messageService.add({ severity: 'Error', summary: 'Error', detail: error.error.message});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
       })
+    }
+
+    private putFlight(itineraryId: number){
+      this.cacheFlight.itineraryId = itineraryId;
+      this.flightApiService.putFlight$(this.cacheFlight).subscribe(() => {
+        if(this.cacheFlight.scales!.length > 0){
+          this.saveScales(itineraryId);
+          return;
+        }
+        this.flightDataService.removeData();
+        this.onCancel.emit();
+        this.messageService.add({severity: 'success', summary: 'Success', detail: FlightMessagesConstants.FLIGHT_UPDATED_SUCCESS_MESSAGE});
+      }, error =>{
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message});
+      })
+    }
+
+    public openConfirmReturn() {  
+      this.confirmationService.confirm({
+          message: GeneralMessagesConstants.GENERAL_RETURN_MESSAGE,
+          header: GeneralMessagesConstants.RETURN_HEADER_MESSAGE,
+          icon: 'pi pi-exclamation-triangle',
+          acceptIcon: "none",
+          rejectIcon: "none",
+          rejectButtonStyleClass: "p-button-text",
+          accept: () => {
+             this.flightDataService.removeData();
+             this.onBack.emit();
+          },
+      });
     }
 
     public cancelCreate(){
@@ -113,11 +188,11 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
                 this.onCancel.emit();
               }
         });
-    }
+    } 
 
     public confirmCreate(){
-      const message = GeneralMessagesConstants.GENERAL_CREATE_MESSAGE + ' flight?';
-      const header =  GeneralMessagesConstants.NEW_HEADER_MESSAGE + ' Flight';
+      const message = (this.updateFlag ? GeneralMessagesConstants.GENERAL_UPDATE_MESSAGE : GeneralMessagesConstants.GENERAL_CREATE_MESSAGE) + ' flight?';
+      const header = (this.updateFlag ? GeneralMessagesConstants.UPDATE_HEADER_MESSAGE + ' this ': GeneralMessagesConstants.NEW_HEADER_MESSAGE)  + ' Flight';
       this.confirmationService.confirm({
         message: message,
         header: header,
@@ -126,7 +201,7 @@ export class FlightsManagementStepConfirmationComponent implements OnInit{
         rejectIcon: "none",
         rejectButtonStyleClass: "p-button-text",
         accept: () => {
-          this.saveItinerary();
+          (this.updateFlag) ? this.putItinerary() : this.saveItinerary();
         }
       });
     }

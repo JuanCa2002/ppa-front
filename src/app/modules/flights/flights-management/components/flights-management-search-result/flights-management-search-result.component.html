@@ -1,37 +1,63 @@
 <div class="card" *ngIf="showData">
     <p-dataView 
-        [value]="flights" layout="list">
-            <ng-template let-flight pTemplate="list">
-                <div class="grid">
-                    <div *ngFor="let flight of flights let index = index;" class="background col-3 border-1 surface-border border-round m-2 p-3">
-                        <div class="w-full mb-3">
-                            <div class="relative w-auto border-1 surface-border">
-                                <img 
-                                    src="../../../../../../assets/img/ppa-air-logo.png" 
-                                    [alt]="flight.municipalityOriginName + ' - ' + flight.municipalityDestinyName"
-                                    class="border-round h-full w-full" />
-                            </div>
+        [value]="flights" 
+        layout="list">
+        <ng-template let-flight pTemplate="list">
+            <div class="grid">
+                <!-- Contenedor responsivo para cada vuelo -->
+                <div *ngFor="let flight of flights; let index = index;" 
+                     class="background col-12 sm:col-6 lg:col-3 border-1 surface-border border-round m-1 p-3">
+                    
+                    <!-- Imagen del vuelo -->
+                    <div class="w-full mb-3">
+                        <div class="relative w-auto border-1 surface-border">
+                            <img 
+                                src="../../../../../../assets/img/ppa-air-logo.png" 
+                                [alt]="flight.municipalityOriginName + ' - ' + flight.municipalityDestinyName"
+                                class="border-round h-full w-full" />
                         </div>
-                        <div class="mb-3 font-medium">
+                    </div>
+
+                    <!-- Información principal del vuelo -->
+                    <div class="flex justify-content-between align-items-center mb-3">
+                        <div class="font-medium text-base">
                             {{ flight.municipalityOriginName + ' - ' + flight.municipalityDestinyName }}
                         </div>
-                        <div class="flex justify-content-between align-items-center">
-                            <div class="mt-0 font-semibold text-xl">
-                                {{ '$' + flight.price }}
-                            </div>
-                            <div class="flex align-items-center justify-content-between gap-2">
-                                <i [ngStyle]="{ 'color': findColor(flight.state!) }" class="fadeout animation-duration-1000 animation-iteration-infinite pi pi-circle-fill"></i>
-                                <span [ngStyle]="{ 'color': findColor(flight.state!) }">{{findLabel(flight.state!)}}</span>
-                            </div>
-                            <span>
-                                <p-button icon="pi pi-search" severity="secondary" [outlined]="true" />
-                                <p-button icon="pi pi-arrow-up-right" styleClass="ml-2" severity="help" />
-                                <p-button icon="pi pi-pencil" styleClass="ml-2" />
-                            </span>
+                        <div class="flex align-items-center gap-2">
+                            <i [ngStyle]="{ 'color': findColor(flight.state!) }" 
+                               class="fadeout animation-duration-1000 animation-iteration-infinite pi pi-circle-fill"></i>
+                            <span [ngStyle]="{ 'color': findColor(flight.state!) }" 
+                                  class="text-sm">{{ findLabel(flight.state!) }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Precio y botones de acciones -->
+                    <div class="flex flex-column lg:flex-row justify-content-between align-items-center">
+                        <div class="mt-0 font-semibold text-xl text-primary mb-3 lg:mb-0">
+                            {{ '$' + flight.price }}
+                        </div>
+                        <div class="flex flex-wrap gap-2 justify-content-end">
+                            <p-button 
+                                icon="pi pi-search" 
+                                severity="secondary" 
+                                [outlined]="true" 
+                                (onClick)="showDetail(flight)">
+                            </p-button>
+                            <p-button 
+                                icon="pi pi-arrow-up-right" 
+                                severity="help" 
+                                (onClick)="editState(flight)">
+                            </p-button>
+                            <p-button 
+                                icon="pi pi-pencil" 
+                                severity="primary" 
+                                (onClick)="update(flight)">
+                            </p-button>
                         </div>
                     </div>
                 </div>
-            </ng-template>
+            </div>
+        </ng-template>
     </p-dataView>
 </div>
 
@@ -42,4 +68,47 @@
 <div class="card" *ngIf="!showData">
     <p-messages [(value)]="messages" [closable]="false" />
 </div>
+
+<p-dialog
+    header="Update State" 
+    [modal]="true"
+    [draggable]="false" 
+    [(visible)]="showModalUpdateState" 
+    [style]="{ width: '50rem' }">
+    <div class="flex justify-content-end gap-2 grid mt-4">
+        <div class="col-12">
+            <p-dropdown 
+            [options]="states"
+            [(ngModel)]="state" 
+             optionLabel="label"
+             optionValue="value" 
+             [filter]="true" 
+             filterBy="label"
+             appendTo="body" 
+             [showClear]="true" 
+             placeholder="Select a state" 
+             class="w-full md:w-56">
+                <ng-template pTemplate="selectedItem" let-selectedOption>
+                    <div class="flex items-center gap-2">
+                        <i [ngStyle]="{ 'color': findColor(selectedOption.value!) }" class="fadeout animation-duration-1000 animation-iteration-infinite pi pi-circle-fill"></i>
+                        <div>{{ selectedOption.label }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-state pTemplate="item">
+                    <div class="flex items-center gap-2">
+                        <i [ngStyle]="{ 'color': findColor(state.value!) }" class="fadeout animation-duration-1000 animation-iteration-infinite pi pi-circle-fill"></i>
+                        <div [ngStyle]="{ 'color': findColor(state.value!) }">{{ state.label }}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="flex justify-content-center align-items-center col-12 gap-2">
+            <p-button label="Cancel" severity="secondary" (onClick)="showModalUpdateState = false"/>
+            <p-button label="Update" (onClick)="confirmUpdateState()"/>
+        </div>
+    </div>
+</p-dialog>
+
+<p-toast position="bottom-center" />
+<p-confirmDialog />
 
