@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService, SharedModule } from 'primeng/api';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FooterComponent } from './components/footer/footer.component';
 
 registerLocaleData( localeEsHN );
 
@@ -20,7 +21,8 @@ registerLocaleData( localeEsHN );
  */
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FooterComponent
   ],
   imports: [
     BrowserAnimationsModule,

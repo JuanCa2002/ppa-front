@@ -2,8 +2,8 @@
     <div class="card flex justify-content-end mt-4 mb-3">
         <p-button label="New Register" [raised]="true" icon="pi pi-plus" (onClick)="showModalNew = true"/>
     </div>
-    <form [formGroup]="formFilterMunicipalities" class="filters">
-        <div class="flex flex-column gap-2">
+    <form [formGroup]="formFilterMunicipalities" class="grid">
+        <div class="flex flex-column col-4 gap-2">
             <label for="municipality_name" class="font-bold">Name</label>
             <input 
                 pInputText 
@@ -11,7 +11,7 @@
                 name="municipality_name"
                 formControlName="name" />
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-4 gap-2">
             <label for="municipality_state" class="font-bold">State</label>
             <p-dropdown 
                 [options]="states"
@@ -23,7 +23,7 @@
                 placeholder="Select"
                 showClear="true"/>
         </div>
-        <div class="flex flex-column gap-2">
+        <div class="flex flex-column col-4 gap-2">
             <label for="municipality_department_id" class="font-bold">Department <span class="required">*</span></label>
             <p-dropdown 
                 [options]="departments"

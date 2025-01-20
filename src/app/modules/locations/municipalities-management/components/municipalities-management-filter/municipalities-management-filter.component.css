@@ -1,9 +1,3 @@
-.filters {
-    display: grid;
-    grid-template: repeat(1, 1fr) / repeat(3, auto);
-    gap: 2rem;
-}
-
 :host ::ng-deep #dropdowm-municipality-department p-dropdown {
     width: 100%;
 }
