@@ -1,7 +1,7 @@
 export class GeneralMessagesConstants {
     public static readonly GENERAL_INFO_FILTER_MESSAGE = 'Click filter to view information';
 
-    public static readonly GENERAL_INFO_EMPTY_SCALES = 'Scales have been added yet';
+    public static readonly GENERAL_INFO_EMPTY_SCALES = 'Scales have not been added yet';
 
     public static readonly DIRECT_FLIGHT = 'This flight would be direct, because scales were not added';
 

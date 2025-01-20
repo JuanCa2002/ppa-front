@@ -19,6 +19,18 @@ export class FlightApiService {
        return this.httpClient.post<FlightDTO>(FlightApiConstants.URL_FLIGHT, flight);
     }
 
+    public putFlight$(flight: FlightDTO): Observable<FlightDTO>{
+        return this.httpClient.put<FlightDTO>(FlightApiConstants.URL_FLIGHT, flight);
+     }
+
+    public patchFlight$(id: number, state: string): Observable<FlightDTO>{
+        return this.httpClient.patch<FlightDTO>(`${FlightApiConstants.URL_FLIGHT}/${id}?state=${state}`, null);
+    }
+
+    public getFlightById$(id: number): Observable<FlightDTO> {
+        return this.httpClient.get<FlightDTO>(`${FlightApiConstants.URL_FLIGHT}/${id}`);
+    }
+
     public getPaginatedFlights$(filter: FlightFilterDTO):Observable<PaginatedResponseDTO<FlightDTO>>{
         let params = new HttpParams()
         .set('rowsPerPage', filter.rowsPerPage.toString())
@@ -42,7 +54,7 @@ export class FlightApiService {
             params = params.set('exitTime', filter.exitTime.toString());
         }
 
-        if (filter.isDirect){
+        if (filter.isDirect != undefined && filter.isDirect != null){
             params = params.set('isDirect', filter.isDirect.toString());
         }
         return this.httpClient.get<PaginatedResponseDTO<FlightDTO>>(FlightApiConstants.URL_FLIGHT,{params})

@@ -16,5 +16,13 @@ export class ItineraryApiService {
       return this.httpClient.post<ItineraryDTO>(ItineraryApiConstants.URL_ITINERARY, itinerary);
     }
 
+    public putItinerary(itinerary: ItineraryDTO): Observable<ItineraryDTO>{
+      return this.httpClient.put<ItineraryDTO>(ItineraryApiConstants.URL_ITINERARY, itinerary);
+    }
+
+    public getItineraryById$(id: number): Observable<ItineraryDTO>{
+      return this.httpClient.get<ItineraryDTO>(`${ItineraryApiConstants.URL_ITINERARY}/${id}`);
+    }
+
     
 }

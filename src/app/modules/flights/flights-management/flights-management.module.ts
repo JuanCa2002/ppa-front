@@ -7,6 +7,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CarouselModule } from 'primeng/carousel';
 import { StepsModule } from 'primeng/steps';
 import { PaginatorModule } from 'primeng/paginator';
+import { FormsModule } from '@angular/forms';
 import { FlightsManagementFilterComponent } from "./components/flights-management-filter/flights-management-filter.component";
 import { FlightsManagementSearchResultComponent } from "./components/flights-management-search-result/flights-management-search-result.component";
 import { FlightsManagementCreateFormComponent } from "./components/flights-management-create-form/flights-management-create-form.component";
@@ -33,7 +34,8 @@ import { FlightsManagementStepConfirmationComponent } from "./components/flights
     CarouselModule,
     SharedModule,
     StepsModule,
-    PaginatorModule
+    PaginatorModule,
+    FormsModule
 ]
   })
   export class FlightsManagementModule { }
